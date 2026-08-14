@@ -54,7 +54,9 @@ impl Tui {
     /// [`Draw`]: tui::Terminal::draw
     /// [`rendering`]: crate::ui:render
     pub fn draw(&mut self, app: &mut App) -> Result<()> {
-        self.terminal.draw(|frame| ui::render(app, frame))?;
+        let list_items = vec!["Fish", "View shop", "Other option 1", "Other option 2",];
+
+        self.terminal.draw(|frame| ui::render_standard_menu(app, frame, list_items))?;
         Ok(())
     }
 
