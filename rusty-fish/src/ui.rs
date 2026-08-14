@@ -1,31 +1,27 @@
 use ratatui::{
     layout::Alignment,
-    style::{Color, Style},
-    widgets::{Block, BorderType, Borders, Paragraph},
+    style::{Stylize},
+    widgets::{Block, BorderType, Borders, List, ListDirection},
+    text::Line,
     Frame,
 };
 
 use crate::app::App;
 
 pub fn render(app: &mut App, frame: &mut Frame) {
+    let list_items = ["Fish", "View shop", "Other option 1", "Other option 2",];
+    let title = Line::from("Rusty Fish");
     frame.render_widget(
-        Paragraph::new(format!(
-            "
-        Press `Esc`, `Ctrl-C` or `q` to stop running.\n\
-        Press `j` and `k` to increment and decrement the counter respectively.\n\
-        Counter: {}
-      ",
-            app.counter
-        ))
-        .block(
-            Block::default()
-                .title("Counter App")
-                .title_alignment(Alignment::Center)
-                .borders(Borders::ALL)
-                .border_type(BorderType::Rounded),
-        )
-        .style(Style::default().fg(Color::Yellow))
-        .alignment(Alignment::Center),
+        List::new(list_items)
+            .block(
+                Block::default()
+                    .title(title.bold())
+                    .title_alignment(Alignment::Center)
+                    .borders(Borders::ALL)
+                    .border_type(BorderType::Rounded),
+            )
+            .highlight_symbol(">")
+            .direction(ListDirection::TopToBottom),
         frame.area(),
     )
 }
