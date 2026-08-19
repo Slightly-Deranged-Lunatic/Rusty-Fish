@@ -7,8 +7,7 @@ pub struct App {
     pub should_quit: bool,
     pub version: String,
     pub name: String,
-    /// Here because keycodes shouldn't do their typical actions if the user is fishing
-    pub is_fishing: bool,
+    pub window: String,
     // Core menus list_state
     pub list_state: ListState,
     // Menus to display in the List
@@ -22,7 +21,7 @@ impl App {
             should_quit: false,
             version: "Super duper beta".to_owned(),
             name: "Rusty Fish".to_owned(),
-            is_fishing: false,
+            window: "Main".to_owned(),
             list_state: ListState::default().with_selected(Some(0)),
             list_items: Vec::new(),
         }
@@ -34,6 +33,10 @@ impl App {
     /// Set should_quit to true to quit the application.
     pub fn quit(&mut self) {
         self.should_quit = true;
+    }
+
+    pub fn fish(&mut self) {
+        self.window = "Fishing".to_owned();
     }
     pub fn set_main_menu_vec(&mut self) {
         // Sets the vector items to be the menu for the main menu
