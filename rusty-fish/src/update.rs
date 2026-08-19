@@ -1,6 +1,6 @@
-use ratatui::{crossterm::event::{KeyCode, KeyEvent,}, widgets::ListState};
+use ratatui::crossterm::event::{KeyCode, KeyEvent,};
 
-use crate::{app::App, menu_functions::{self, do_action}};
+use crate::{app::App, menu_functions::do_action};
 
 pub fn update(app: &mut App, key_event: KeyEvent) {
     match key_event.code {

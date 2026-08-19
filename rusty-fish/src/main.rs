@@ -38,10 +38,10 @@ fn main() -> Result<()> {
     while !app.should_quit {
         // Render the main user interface.
         if app.window == "Main" {
-            tui.draw_main_menu(&mut app);
+            let _ = tui.draw_main_menu(&mut app);
         }
         else if app.window == "Fishing" {
-            tui.draw_fishing_menu(&mut app);
+            let _ = tui.draw_fishing_menu(&mut app);
         }
         // Handle events.
         match tui.events.next()? {

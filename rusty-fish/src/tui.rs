@@ -60,7 +60,7 @@ impl Tui {
             .clone()
             .into_iter()
             .map(ListItem::new)
-            .collect();;
+            .collect();
         self.terminal.draw(|frame| ui::render_standard_menu(app, frame, list_items))?;
         Ok(())
     }
