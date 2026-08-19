@@ -1,8 +1,8 @@
 use ratatui::{
     Frame,
     style::{Color, Style},
-    text::{Line,},
-    widgets::{Block, BorderType, Borders, List, Padding},
+    text::Line,
+    widgets::{Block, BorderType, Borders, List, ListItem, Padding},
 };
 
 use crate::app::App;
@@ -21,7 +21,7 @@ fn render_border(frame: &mut Frame, app: &mut App) {
     frame.render_widget(border, area);
 }
 
-fn render_list(frame: &mut Frame, list_items: Vec<&str>, app: &mut App) {
+fn render_list(frame: &mut Frame, list_items: Vec<ListItem>, app: &mut App) {
     // Render the list
     let padding_block = Block::new().padding(Padding::new(2, 2, 2, 2));
     let list = List::new(list_items)
@@ -31,7 +31,11 @@ fn render_list(frame: &mut Frame, list_items: Vec<&str>, app: &mut App) {
     frame.render_stateful_widget(list, frame.area(), &mut app.list_state);
 }
 
-pub fn render_standard_menu(app: &mut App, frame: &mut Frame, list_items: Vec<&str>) {
+pub fn render_standard_menu(app: &mut App, frame: &mut Frame, list_items: Vec<ListItem>) {
     render_border(frame, app);
     render_list(frame, list_items, app);
+}
+
+pub fn render_fishing_ui(app: &mut App, frame: &mut Frame) {
+    render_border(frame, app);
 }

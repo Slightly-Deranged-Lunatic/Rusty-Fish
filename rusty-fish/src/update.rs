@@ -1,6 +1,6 @@
-use ratatui::crossterm::event::{KeyCode, KeyEvent,};
+use ratatui::{crossterm::event::{KeyCode, KeyEvent,}, widgets::ListState};
 
-use crate::app::App;
+use crate::{app::App, menu_functions::{self, do_action}};
 
 pub fn update(app: &mut App, key_event: KeyEvent) {
     match key_event.code {
@@ -8,6 +8,10 @@ pub fn update(app: &mut App, key_event: KeyEvent) {
         KeyCode::Char('q') => app.quit(),
         KeyCode::Char('w') | KeyCode::Up => app.list_state.select_previous(),
         KeyCode::Char('s') | KeyCode::Down => app.list_state.select_next(),
+        KeyCode::Enter => {
+            let selection = app.list_state.selected().unwrap();
+            do_action(selection, app);
+        },
         // Do nothing if the key is not in the above list
         _ => {}
     };

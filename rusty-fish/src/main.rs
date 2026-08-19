@@ -12,6 +12,10 @@ pub mod tui;
 
 /// Application updater.
 pub mod update;
+
+// Main menu
+pub mod menu_functions;
+
 use app::App;
 use color_eyre::Result;
 use event::{Event, EventHandler};
@@ -32,8 +36,12 @@ fn main() -> Result<()> {
 
     // Start the main loop.
     while !app.should_quit {
-        // Render the user interface.
-        tui.draw(&mut app)?;
+        // Render the main user interface.
+        while app.is_fishing {
+            tui.draw_fishing_menu(&mut app)?;
+        }
+        tui.draw_main_menu(&mut app)?;
+
         // Handle events.
         match tui.events.next()? {
             Event::Tick => {}
