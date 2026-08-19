@@ -1,5 +1,9 @@
 use ratatui::{
-    Frame, layout::{Constraint, Layout}, style::{Color, Style, Stylize}, text::Line, widgets::{Block, BorderType, Borders, List, ListItem, Padding, Paragraph},
+    Frame,
+    layout::{Constraint, Layout},
+    style::{Color, Style},
+    text::Line,
+    widgets::{Block, BorderType, Borders, List, ListItem, Padding, Paragraph},
 };
 
 use crate::app::App;
@@ -45,7 +49,10 @@ fn render_fishing_text(frame: &mut Frame) {
         Constraint::Percentage(20),
     ])
     .split(vertical_layout[1]);
-    frame.render_widget(Paragraph::new(text).block(Block::default().borders(Borders::ALL)), horizontal_layout[1]);
+    frame.render_widget(
+        Paragraph::new(text).block(Block::default().borders(Borders::ALL)),
+        horizontal_layout[1],
+    );
 }
 
 pub fn render_standard_menu(app: &mut App, frame: &mut Frame, list_items: Vec<ListItem>) {

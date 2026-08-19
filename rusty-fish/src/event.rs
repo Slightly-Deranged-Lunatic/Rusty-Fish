@@ -7,7 +7,6 @@ use std::{
 use color_eyre::Result;
 use ratatui::crossterm::event::{self, Event as CrosstermEvent, KeyEvent, MouseEvent};
 
-
 /// Terminal events.
 #[derive(Clone, Copy, Debug)]
 pub enum Event {

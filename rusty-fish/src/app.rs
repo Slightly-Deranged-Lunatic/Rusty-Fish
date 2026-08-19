@@ -41,8 +41,8 @@ impl App {
     pub fn set_main_menu_vec(&mut self) {
         // Sets the vector items to be the menu for the main menu
         self.list_items = vec!["Fish", "Some other button", "Another button"]
-        .into_iter()
-        .map(String::from)
-        .collect();
+            .into_iter()
+            .map(String::from)
+            .collect();
     }
 }

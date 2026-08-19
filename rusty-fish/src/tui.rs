@@ -49,24 +49,26 @@ impl Tui {
         Ok(())
     }
 
-
     /// [`Draw`] the terminal interface by [`rendering`] the widgets.
     ///
     /// [`Draw`]: tui::Terminal::draw
     /// [`rendering`]: crate::ui:render
     pub fn draw_main_menu(&mut self, app: &mut App) -> Result<()> {
         app.set_main_menu_vec();
-        let list_items = app.list_items
+        let list_items = app
+            .list_items
             .clone()
             .into_iter()
             .map(ListItem::new)
             .collect();
-        self.terminal.draw(|frame| ui::render_standard_menu(app, frame, list_items))?;
+        self.terminal
+            .draw(|frame| ui::render_standard_menu(app, frame, list_items))?;
         Ok(())
     }
 
     pub fn draw_fishing_menu(&mut self, app: &mut App) -> Result<()> {
-        self.terminal.draw(|frame| ui::render_fishing_ui(app, frame))?;
+        self.terminal
+            .draw(|frame| ui::render_fishing_ui(app, frame))?;
         Ok(())
     }
 

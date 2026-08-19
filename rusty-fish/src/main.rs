@@ -19,7 +19,7 @@ pub mod menu_functions;
 use app::App;
 use color_eyre::Result;
 use event::{Event, EventHandler};
-use ratatui::{backend::CrosstermBackend, Terminal};
+use ratatui::{Terminal, backend::CrosstermBackend};
 use tui::Tui;
 use update::update;
 
@@ -39,8 +39,7 @@ fn main() -> Result<()> {
         // Render the main user interface.
         if app.window == "Main" {
             let _ = tui.draw_main_menu(&mut app);
-        }
-        else if app.window == "Fishing" {
+        } else if app.window == "Fishing" {
             let _ = tui.draw_fishing_menu(&mut app);
         }
         // Handle events.
