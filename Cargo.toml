@@ -1,11 +1,3 @@
-[package]
-name = "rusty-fish"
-version = "0.1.0"
-description = "A fishing game written in Rust using Ratatui"
-authors = ["Slightly-Deranged-Lunatic <110319723+Slightly-Deranged-Lunatic@users.noreply.github.com>"]
-license = "MIT"
-edition = "2024"
-
 [dependencies]
 color-eyre = "0.6.5"
 crossterm = "0.29.0"
