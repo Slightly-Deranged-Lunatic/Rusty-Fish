@@ -16,6 +16,8 @@ pub mod update;
 // Main menu
 pub mod menu_functions;
 
+pub mod directory_functions;
+
 use app::App;
 use color_eyre::Result;
 use event::{Event, EventHandler};
