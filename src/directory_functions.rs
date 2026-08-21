@@ -34,6 +34,9 @@ pub fn download_words_list(project_directory: ProjectDirs) {
         let response = reqwest::blocking::get(url).unwrap();
 
         let words_list_file = words_list_directory.join(Path::new(list));
-        fs::write(words_list_file, response.text().unwrap());
+        let _ = match fs::write(&words_list_file, response.text().unwrap()) {
+            Ok(_) => println!("Successfully made file {:?}", words_list_file),
+            Err(_) => println!("Failed to make file {:?}", words_list_file)
+        };
     }
 }
