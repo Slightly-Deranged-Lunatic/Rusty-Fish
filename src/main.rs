@@ -54,10 +54,6 @@ fn main() -> Result<()> {
 
     // Start the main loop.
     while !app.should_quit {
-        log::info!(
-            "App.window is currently {}, selecting the respective action",
-            { &app.window }
-        );
         // Render the main user interface.
         if app.window == "Main" {
             let _ = tui.draw_main_menu(&mut app);
