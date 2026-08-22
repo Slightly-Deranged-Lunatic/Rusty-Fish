@@ -34,9 +34,9 @@ fn main() -> Result<()> {
 
     let log_directory = project_directory.data_dir().join("logs");
     Ftail::new()
-    .daily_file(&log_directory, LevelFilter::Debug)
-    .retention_days(7)
-    .init()?;
+        .daily_file(&log_directory, LevelFilter::Debug)
+        .retention_days(7)
+        .init()?;
 
     if directory_functions::should_download_words_list(&project_directory) {
         directory_functions::download_words_list(&project_directory);
@@ -54,7 +54,10 @@ fn main() -> Result<()> {
 
     // Start the main loop.
     while !app.should_quit {
-        log::info!("App.window is current {}, selecting the respective action", {&app.window});
+        log::info!(
+            "App.window is currently {}, selecting the respective action",
+            { &app.window }
+        );
         // Render the main user interface.
         if app.window == "Main" {
             let _ = tui.draw_main_menu(&mut app);

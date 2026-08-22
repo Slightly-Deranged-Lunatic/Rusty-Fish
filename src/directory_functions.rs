@@ -8,7 +8,7 @@ pub fn make_project_directories(project_directory: &ProjectDirs) {
     // Makes the directories the project needs for stuff
     // At the moment this is only a data directory, however, later on I plan on making a config directory.
     // The above is why this is a function and not just in download_words_list()
-    
+
     let data_directory_children = vec!["words_lists", "logs"];
     for child in data_directory_children {
         let path = project_directory.data_dir().join(Path::new(child));
@@ -29,8 +29,12 @@ pub fn download_words_list(project_directory: &ProjectDirs) {
     for list in words_lists_files {
         let url = format!("{}{}", base_url, list);
         let response = reqwest::blocking::get(&url).unwrap();
-        if ! response.status().is_success() {
-            let message = format!("Response from {} was {} which was not a success. Is Github down?", &url, response.status());
+        if !response.status().is_success() {
+            let message = format!(
+                "Response from {} was {} which was not a success. Is Github down?",
+                &url,
+                response.status()
+            );
             log::error!("{}", message);
             panic!("{}", message);
         }
@@ -42,7 +46,7 @@ pub fn download_words_list(project_directory: &ProjectDirs) {
                 let message = format!("Failed to make file {:?} due to {}", words_list_file, e);
                 log::error!("{}", message);
                 panic!("{}", message);
-            },
+            }
         };
     }
 }
