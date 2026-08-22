@@ -19,7 +19,7 @@ pub fn make_project_directories(project_directory: &ProjectDirs) {
 
 pub fn download_words_list(project_directory: &ProjectDirs) {
     // Create project_directory.datadir()/words_list
-    let words_list_directory = project_directory.data_dir().join(Path::new("words_list"));
+    let words_list_directory = project_directory.data_dir().join(Path::new("words_lists"));
     let words_lists_files = vec!["easy_words.json", "normal_words.json", "hard_words.json"];
     let base_url = "https://raw.githubusercontent.com/Slightly-Deranged-Lunatic/Rusty-Fish/refs/heads/main/words_lists/";
 
@@ -41,7 +41,7 @@ pub fn should_download_words_list(project_directory: &ProjectDirs) -> bool {
     // Returns true if we need to download the words lists again
     // Returns false if not
 
-    let words_list_directory = project_directory.data_dir().join(Path::new("words_list"));
+    let words_list_directory = project_directory.data_dir().join(Path::new("words_lists"));
     let files = fs::read_dir(words_list_directory).unwrap();
     let mut local_files: Vec<PathBuf> = Vec::new();
     for path in files {
