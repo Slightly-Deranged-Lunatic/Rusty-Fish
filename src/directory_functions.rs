@@ -13,6 +13,8 @@ pub fn make_project_directories(project_directory: &ProjectDirs) {
     for child in data_directory_children {
         let path = project_directory.data_dir().join(Path::new(child));
         // This will also make the parent directories so no need to worry about those
+        // This isn't logged because the logger isn't initalized, however, I'm not *that* worried about it.
+        // This function has a slim chance to fail anyways so
         fs::create_dir_all(path).expect("failed to create directory");
     }
 }
