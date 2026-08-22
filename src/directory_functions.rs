@@ -26,7 +26,10 @@ pub fn download_words_list(project_directory: &ProjectDirs) {
     // Actually download the file from the repository
     for list in words_lists_files {
         let url = format!("{}{}", base_url, list);
-        let response = reqwest::blocking::get(url).unwrap();
+        let response = reqwest::blocking::get(&url).unwrap();
+        if ! response.status().is_success() {
+            panic!("Response from {} was {} which was not a success. Is Github down?", &url, response.status())
+        }
 
         let words_list_file = words_list_directory.join(Path::new(list));
         let _ = match fs::write(&words_list_file, response.text().unwrap()) {
