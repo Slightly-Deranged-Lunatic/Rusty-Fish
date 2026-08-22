@@ -58,16 +58,16 @@ pub fn should_download_words_list(project_directory: &ProjectDirs) -> bool {
         );
         local_files.push(file);
     }
-    let mut words_lists_files = vec![
+    let mut expected_files = vec![
         PathBuf::from("easy_words.json"),
         PathBuf::from("normal_words.json"),
         PathBuf::from("hard_words.json"),
     ];
 
-    words_lists_files.sort();
+    expected_files.sort();
     local_files.sort();
 
-    if local_files == words_lists_files {
+    if local_files == expected_files {
         return false;
     } else {
         return true;
