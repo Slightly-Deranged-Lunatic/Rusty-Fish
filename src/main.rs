@@ -22,14 +22,22 @@ use app::App;
 use color_eyre::Result;
 use directories::ProjectDirs;
 use event::{Event, EventHandler};
+use ftail::Ftail;
+use log::LevelFilter;
 use ratatui::{Terminal, backend::CrosstermBackend};
 use tui::Tui;
 use update::update;
 
 fn main() -> Result<()> {
     let project_directory = ProjectDirs::from("", "Deranged Lunatic Apps", "rusty-fish").unwrap();
-
     directory_functions::make_project_directories(&project_directory);
+
+    let log_directory = project_directory.data_dir().join("logs");
+    Ftail::new()
+    .daily_file(&log_directory, LevelFilter::Debug)
+    .retention_days(7)
+    .init()?;
+
     if directory_functions::should_download_words_list(&project_directory) {
         directory_functions::download_words_list(&project_directory);
     }

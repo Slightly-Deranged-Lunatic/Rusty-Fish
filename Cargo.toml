@@ -9,6 +9,8 @@ crossterm = "0.29.0"
 ratatui = "0.30.2"
 directories = "6.0"
 reqwest = { version = "0.11", features = ["blocking", "json"] }
+ftail = "0.3"
+log = "0.4.33"
 
 # Read the optimization guideline for more details: https://ratatui.rs/recipes/apps/release-your-app/#optimizations
 [profile.release]
