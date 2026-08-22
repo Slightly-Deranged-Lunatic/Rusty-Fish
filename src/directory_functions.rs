@@ -8,13 +8,13 @@ pub fn make_project_directories(project_directory: &ProjectDirs) {
     // Makes the directories the project needs for stuff
     // At the moment this is only a data directory, however, later on I plan on making a config directory.
     // The above is why this is a function and not just in download_words_list()
-
-    let words_list_directory = project_directory.data_dir().join(Path::new("words_list"));
-    // This will also make the parent directories so no need to worry about those
-    let _ = match fs::create_dir_all(&words_list_directory) {
-        Ok(_) => println!("Sucessfully made directory {:?}", words_list_directory),
-        Err(_) => println!("Directory {:?} failed to be made!", words_list_directory),
-    };
+    
+    let data_directory_children = vec!["words_lists", "logs"];
+    for child in data_directory_children {
+        let path = project_directory.data_dir().join(Path::new(child));
+        // This will also make the parent directories so no need to worry about those
+        fs::create_dir_all(path).expect("failed to create directory");
+    }
 }
 
 pub fn download_words_list(project_directory: &ProjectDirs) {
