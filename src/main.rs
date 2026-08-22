@@ -24,8 +24,17 @@ use event::{Event, EventHandler};
 use ratatui::{Terminal, backend::CrosstermBackend};
 use tui::Tui;
 use update::update;
+use directories::ProjectDirs;
 
 fn main() -> Result<()> {
+    let project_directory = ProjectDirs::from("", "Deranged Lunatic Apps", "rusty-fish").unwrap();
+
+    directory_functions::make_project_directories(&project_directory);
+    if directory_functions::should_download_words_list(&project_directory) {
+        directory_functions::download_words_list(&project_directory);
+    }
+
+    // TODO: setup logs
     // Create an application.
     let mut app = App::new();
 
