@@ -32,10 +32,12 @@ impl App {
 
     /// Set should_quit to true to quit the application.
     pub fn quit(&mut self) {
+        log::info!("Setting app.should_quit to true");
         self.should_quit = true;
     }
 
     pub fn fish(&mut self) {
+        log::info!("Setting the current window to 'Fishing'");
         self.window = "Fishing".to_owned();
     }
     pub fn set_main_menu_vec(&mut self) {

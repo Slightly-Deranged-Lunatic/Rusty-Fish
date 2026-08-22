@@ -42,7 +42,6 @@ fn main() -> Result<()> {
         directory_functions::download_words_list(&project_directory);
     }
 
-    // TODO: setup logs
     // Create an application.
     let mut app = App::new();
 
@@ -55,6 +54,7 @@ fn main() -> Result<()> {
 
     // Start the main loop.
     while !app.should_quit {
+        log::info!("App.window is current {}, selecting the respective action", {&app.window});
         // Render the main user interface.
         if app.window == "Main" {
             let _ = tui.draw_main_menu(&mut app);
