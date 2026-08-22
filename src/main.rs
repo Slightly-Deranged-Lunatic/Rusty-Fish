@@ -20,11 +20,11 @@ pub mod directory_functions;
 
 use app::App;
 use color_eyre::Result;
+use directories::ProjectDirs;
 use event::{Event, EventHandler};
 use ratatui::{Terminal, backend::CrosstermBackend};
 use tui::Tui;
 use update::update;
-use directories::ProjectDirs;
 
 fn main() -> Result<()> {
     let project_directory = ProjectDirs::from("", "Deranged Lunatic Apps", "rusty-fish").unwrap();
