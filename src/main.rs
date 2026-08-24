@@ -26,10 +26,10 @@ use directories::ProjectDirs;
 use event::{Event, EventHandler};
 use ftail::Ftail;
 use log::LevelFilter;
+use player::Player;
 use ratatui::{Terminal, backend::CrosstermBackend};
 use tui::Tui;
 use update::update;
-use player::Player;
 
 fn main() -> Result<()> {
     let project_directory = ProjectDirs::from("", "Deranged Lunatic Apps", "rusty-fish").unwrap();

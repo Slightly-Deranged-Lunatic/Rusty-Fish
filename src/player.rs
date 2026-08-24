@@ -1,12 +1,12 @@
 #[derive(Debug, Default)]
 pub struct Player {
-    difficulty: String
+    pub difficulty: String
 }
 
 impl Player {
     pub fn new() -> Self {
         Player {
-            difficulty: "Normal".to_owned()
+            difficulty: "normal".to_owned()
         }
     }
 }
