@@ -18,6 +18,8 @@ pub mod menu_functions;
 
 pub mod directory_functions;
 
+pub mod player;
+
 use app::App;
 use color_eyre::Result;
 use directories::ProjectDirs;
@@ -27,6 +29,7 @@ use log::LevelFilter;
 use ratatui::{Terminal, backend::CrosstermBackend};
 use tui::Tui;
 use update::update;
+use player::Player;
 
 fn main() -> Result<()> {
     let project_directory = ProjectDirs::from("", "Deranged Lunatic Apps", "rusty-fish").unwrap();
@@ -44,6 +47,9 @@ fn main() -> Result<()> {
 
     // Create an application.
     let mut app = App::new();
+
+    // Create a new player (ill change this later im just lazy)
+    let player = Player::new();
 
     // Initialize the terminal user interface.
     let backend = CrosstermBackend::new(std::io::stderr());
