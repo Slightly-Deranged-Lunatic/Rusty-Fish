@@ -1,9 +1,10 @@
-use crate::{app::App, player::Player};
+use crate::{app::App, player::Player, ui};
 use directories::ProjectDirs;
 use rand::seq::IndexedRandom;
 use serde::{Deserialize, Serialize};
 use serde_json;
 use std::fs;
+use ratatui::Frame;
 
 pub fn do_action(selection: usize, app: &mut App) {
     let action = &app.list_items[selection];
@@ -18,7 +19,11 @@ pub fn do_action(selection: usize, app: &mut App) {
     }
 }
 
-pub fn get_random_words(project_directory: &ProjectDirs, player: Player) -> String {
+pub fn fish(project_directory: &ProjectDirs, player: &Player, app: &mut App, frame: &mut Frame<'_>, words: String) {
+    ui::render_fishing_ui(app, frame, words);
+}
+
+pub fn get_random_words(project_directory: &ProjectDirs, player: &Player) -> String {
     #[derive(Serialize, Deserialize)]
     struct JsonData {
         words: Vec<String>,

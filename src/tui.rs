@@ -1,6 +1,7 @@
 use std::{io, panic};
 
 use color_eyre::Result;
+use directories::ProjectDirs;
 use ratatui::crossterm::{
     event::{DisableMouseCapture, EnableMouseCapture},
     execute,
@@ -10,7 +11,7 @@ use ratatui::widgets::ListItem;
 
 pub type CrosstermTerminal = ratatui::Terminal<ratatui::backend::CrosstermBackend<std::io::Stderr>>;
 
-use crate::{app::App, event::EventHandler, ui};
+use crate::{app::App, event::EventHandler, menu_functions, player::Player, ui};
 
 /// Representation of a terminal user interface.
 ///
@@ -66,9 +67,9 @@ impl Tui {
         Ok(())
     }
 
-    pub fn draw_fishing_menu(&mut self, app: &mut App) -> Result<()> {
+    pub fn draw_fishing_menu(&mut self, project_directory: &ProjectDirs, player: &Player, app: &mut App, words: String) -> Result<()> {
         self.terminal
-            .draw(|frame| ui::render_fishing_ui(app, frame))?;
+            .draw(|frame| menu_functions::fish(project_directory, player, app, frame, words))?;
         Ok(())
     }
 

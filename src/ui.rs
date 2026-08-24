@@ -2,8 +2,8 @@ use ratatui::{
     Frame,
     layout::{Constraint, Layout},
     style::{Color, Style},
-    text::Line,
-    widgets::{Block, BorderType, Borders, List, ListItem, Padding, Paragraph},
+    text::{Text, Line},
+    widgets::{Block, BorderType, Borders, List, ListItem, Padding, Paragraph, Wrap},
 };
 
 use crate::app::App;
@@ -31,11 +31,8 @@ fn render_list(frame: &mut Frame, list_items: Vec<ListItem>, app: &mut App) {
     frame.render_stateful_widget(list, frame.area(), &mut app.list_state);
 }
 
-fn render_fishing_text(frame: &mut Frame) {
-    let text: Vec<Line<'_>> = vec![
-        "This is some example text!".into(),
-        "Look! It's even got a new line!".into(),
-    ];
+fn render_fishing_text(frame: &mut Frame, words: String) {
+    let text= Text::from(words);
     let vertical_layout = Layout::vertical([
         Constraint::Percentage(20),
         Constraint::Percentage(100),
@@ -50,7 +47,7 @@ fn render_fishing_text(frame: &mut Frame) {
     ])
     .split(vertical_layout[1]);
     frame.render_widget(
-        Paragraph::new(text).block(Block::default().borders(Borders::ALL)),
+        Paragraph::new(text).block(Block::default().borders(Borders::ALL)).wrap(Wrap { trim: (true) }),
         horizontal_layout[1],
     );
 }
@@ -61,8 +58,8 @@ pub fn render_standard_menu(app: &mut App, frame: &mut Frame, list_items: Vec<Li
     render_list(frame, list_items, app);
 }
 
-pub fn render_fishing_ui(app: &mut App, frame: &mut Frame) {
+pub fn render_fishing_ui(app: &mut App, frame: &mut Frame, words: String) {
     let instructions = Line::from("Type the text on screen");
     render_border(frame, app, instructions);
-    render_fishing_text(frame);
+    render_fishing_text(frame, words);
 }

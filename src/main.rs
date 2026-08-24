@@ -58,13 +58,14 @@ fn main() -> Result<()> {
     let mut tui = Tui::new(terminal, events);
     tui.enter()?;
 
+    let words = menu_functions::get_random_words(&project_directory, &player);
     // Start the main loop.
     while !app.should_quit {
         // Render the main user interface.
         if app.window == "Main" {
             let _ = tui.draw_main_menu(&mut app);
         } else if app.window == "Fishing" {
-            let _ = tui.draw_fishing_menu(&mut app);
+            let _ = tui.draw_fishing_menu(&project_directory, &player, &mut app, words.clone());
         }
         // Handle events.
         match tui.events.next()? {
