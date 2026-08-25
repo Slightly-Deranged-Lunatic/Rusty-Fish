@@ -15,7 +15,10 @@ pub fn make_project_directories(project_directory: &ProjectDirs) {
         // This will also make the parent directories so no need to worry about those
         // This isn't logged because the logger isn't initalized, however, I'm not *that* worried about it.
         // This function has a slim chance to fail anyways so
-        fs::create_dir_all(path).expect("failed to create directory");
+        match fs::create_dir_all(&path) {
+            Ok(_) => {}
+            Err(e) => panic!("Failed to make directory {:?} due to {}", &path, e)
+        }
     }
 }
 

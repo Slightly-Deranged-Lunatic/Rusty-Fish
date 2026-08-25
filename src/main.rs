@@ -80,3 +80,6 @@ fn main() -> Result<()> {
     tui.exit()?;
     Ok(())
 }
+
+// TODO: Actual typing test stuff
+// Render a text entry widget on top of text?? man idfk
