@@ -1,9 +1,9 @@
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 
-use crate::{app::App, menu_functions::do_action};
+use crate::{app::{App, WindowType}, menu_functions::do_action};
 
 pub fn update(app: &mut App, key_event: KeyEvent) {
-    if app.window == "Main" {
+    if app.window == WindowType::Main {
         match key_event.code {
             // Match keycode::eventtype here to specific functions, ie
             KeyCode::Char('q') => app.quit(),
@@ -16,7 +16,7 @@ pub fn update(app: &mut App, key_event: KeyEvent) {
             // Do nothing if the key is not in the above list
             _ => {}
         }
-    } else if  app.window == "Fishing" {
+    } else if  app.window == WindowType::Fishing {
         if key_event.code == KeyCode::Char('q') {app.quit()} // TEMPORARY PLEASE DONT FORGET TO DELETE THIS
         match key_event.code.as_char() {
             Some(character) => app.insert_text(character),

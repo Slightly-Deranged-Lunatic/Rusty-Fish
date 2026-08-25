@@ -1,5 +1,11 @@
 use ratatui::widgets::ListState;
 
+#[derive(Debug, Default, PartialEq)]
+pub enum WindowType {
+    #[default] Main,
+    Fishing
+}
+
 /// Application.
 #[derive(Debug, Default)]
 pub struct App {
@@ -7,7 +13,7 @@ pub struct App {
     pub should_quit: bool,
     pub version: String,
     pub name: String,
-    pub window: String,
+    pub window: WindowType,
     // Core menus list_state
     pub list_state: ListState,
     // Menus to display in the List
@@ -23,7 +29,7 @@ impl App {
             should_quit: false,
             version: "Super duper beta".to_owned(),
             name: "Rusty Fish".to_owned(),
-            window: "Main".to_owned(),
+            window: WindowType::Main,
             list_state: ListState::default().with_selected(Some(0)),
             list_items: Vec::new(),
             typed_text: Vec::new(),
@@ -41,7 +47,7 @@ impl App {
 
     pub fn fish(&mut self) {
         log::info!("Setting the current window to 'Fishing'");
-        self.window = "Fishing".to_owned();
+        self.window = WindowType::Fishing;
     }
     pub fn set_main_menu_vec(&mut self) {
         // Sets the vector items to be the menu for the main menu

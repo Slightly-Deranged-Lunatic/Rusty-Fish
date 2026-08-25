@@ -20,7 +20,7 @@ pub mod directory_functions;
 
 pub mod player;
 
-use app::App;
+use app::{App, WindowType};
 use color_eyre::Result;
 use directories::ProjectDirs;
 use event::{Event, EventHandler};
@@ -30,6 +30,7 @@ use player::Player;
 use ratatui::{Terminal, backend::CrosstermBackend};
 use tui::Tui;
 use update::update;
+
 
 fn main() -> Result<()> {
     let project_directory = ProjectDirs::from("", "Deranged Lunatic Apps", "rusty-fish").unwrap();
@@ -62,9 +63,9 @@ fn main() -> Result<()> {
     // Start the main loop.
     while !app.should_quit {
         // Render the main user interface.
-        if app.window == "Main" {
+        if app.window == WindowType::Main {
             let _ = tui.draw_main_menu(&mut app);
-        } else if app.window == "Fishing" {
+        } else if app.window == WindowType::Fishing {
             let _ = tui.draw_fishing_menu(&project_directory, &player, &mut app, words.clone());
         }
         // Handle events.
