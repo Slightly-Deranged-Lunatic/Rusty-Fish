@@ -12,6 +12,8 @@ pub struct App {
     pub list_state: ListState,
     // Menus to display in the List
     pub list_items: Vec<String>,
+    // Typed text for the fishing game
+    pub typed_text: Vec<char>,
 }
 
 impl App {
@@ -24,6 +26,7 @@ impl App {
             window: "Main".to_owned(),
             list_state: ListState::default().with_selected(Some(0)),
             list_items: Vec::new(),
+            typed_text: Vec::new(),
         }
     }
 
@@ -46,5 +49,8 @@ impl App {
             .into_iter()
             .map(String::from)
             .collect();
+    }
+    pub fn insert_text(&mut self, character: char) {
+        self.typed_text.push(character);
     }
 }
