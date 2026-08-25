@@ -32,7 +32,7 @@ fn render_list(frame: &mut Frame, list_items: Vec<ListItem>, app: &mut App) {
 }
 
 fn render_fishing_text(frame: &mut Frame, words: String) {
-    let text= Text::from(words);
+    let text= Text::styled(words, Style::default().fg(Color::DarkGray));
     let vertical_layout = Layout::vertical([
         Constraint::Percentage(20),
         Constraint::Percentage(100),
@@ -47,7 +47,9 @@ fn render_fishing_text(frame: &mut Frame, words: String) {
     ])
     .split(vertical_layout[1]);
     frame.render_widget(
-        Paragraph::new(text).block(Block::default().borders(Borders::ALL)).wrap(Wrap { trim: (true) }),
+        Paragraph::new(text)
+        .block(Block::default().borders(Borders::ALL))
+        .wrap(Wrap { trim: (true) }),
         horizontal_layout[1],
     );
 }
