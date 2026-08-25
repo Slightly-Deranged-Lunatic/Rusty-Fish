@@ -17,7 +17,9 @@ pub fn update(app: &mut App, key_event: KeyEvent) {
             _ => {}
         }
     } else if  app.window == "Fishing" {
-        let character_typed = key_event.code.as_char().unwrap();
-        app.insert_text(character_typed);        
+        match key_event.code.as_char() {
+            Some(character) => app.insert_text(character),
+            None => log::info!("Failed to convert {} to a char", key_event.code)
+        }
     }
 }
