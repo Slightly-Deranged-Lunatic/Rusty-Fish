@@ -2,7 +2,7 @@ use ratatui::{
     Frame,
     layout::{Constraint, Layout},
     style::{Color, Style},
-    text::{Text, Line},
+    text::{Text, Line, Span},
     widgets::{Block, BorderType, Borders, List, ListItem, Padding, Paragraph, Wrap},
 };
 
@@ -31,8 +31,27 @@ fn render_list(frame: &mut Frame, list_items: Vec<ListItem>, app: &mut App) {
     frame.render_stateful_widget(list, frame.area(), &mut app.list_state);
 }
 
-fn render_fishing_text(frame: &mut Frame, words: String) {
-    let text= Text::styled(words, Style::default().fg(Color::DarkGray));
+fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: & mut App) {
+    let mut character_span_vec:Vec<Span> = Vec::new();
+
+    for (index, character) in words.iter().enumerate() {
+        if app.typed_text.get(index).is_none() {
+            character_span_vec.push(
+                Span::styled(character.to_string(), Style::default().fg(Color::DarkGray))
+            );
+        } else if app.typed_text[index] == *character {
+            character_span_vec.push(
+                Span::styled(character.to_string(), Style::default().fg(Color::Magenta))
+            );
+        } else if app.typed_text[index] != *character {
+            character_span_vec.push(
+                Span::styled(character.to_string(), Style::default().fg(Color::Red))
+            );
+        }
+    }
+
+    let text = Text::from(Line::from(character_span_vec));
+
     let vertical_layout = Layout::vertical([
         Constraint::Percentage(20),
         Constraint::Percentage(100),
@@ -46,6 +65,7 @@ fn render_fishing_text(frame: &mut Frame, words: String) {
         Constraint::Percentage(20),
     ])
     .split(vertical_layout[1]);
+
     frame.render_widget(
         Paragraph::new(text)
         .block(Block::default().borders(Borders::ALL))
@@ -60,8 +80,8 @@ pub fn render_standard_menu(app: &mut App, frame: &mut Frame, list_items: Vec<Li
     render_list(frame, list_items, app);
 }
 
-pub fn render_fishing_ui(app: &mut App, frame: &mut Frame, words: String) {
+pub fn render_fishing_ui(app: &mut App, frame: &mut Frame, words: Vec<char>) {
     let instructions = Line::from("Type the text on screen");
     render_border(frame, app, instructions);
-    render_fishing_text(frame, words);
+    render_fishing_text(frame, words, app);
 }

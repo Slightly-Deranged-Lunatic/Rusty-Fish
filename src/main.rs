@@ -83,4 +83,10 @@ fn main() -> Result<()> {
 }
 
 // TODO: Actual typing test stuff
-// Render a text entry widget on top of text?? man idfk
+// Each individual character should be a span
+// For loop on the character to type vec
+// Compare the character to the respective position in app.typed_text using .get(i) 
+// If it is the same, color that character / span purple
+// If it is not the same, color that character / span red
+// If it returns None, color that character / span dark gray to represent untyped text
+
