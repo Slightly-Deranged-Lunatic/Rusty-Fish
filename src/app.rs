@@ -59,4 +59,7 @@ impl App {
     pub fn insert_text(&mut self, character: char) {
         self.typed_text.push(character);
     }
+    pub fn pop_typed_text(&mut self) {
+        self.typed_text.pop();
+    }
 }

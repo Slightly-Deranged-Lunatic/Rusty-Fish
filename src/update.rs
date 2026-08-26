@@ -19,6 +19,7 @@ pub fn update(app: &mut App, key_event: KeyEvent) {
     } else if  app.window == WindowType::Fishing {
         match key_event.code {
             KeyCode::Char('q') => app.quit(), // TEMPORARY PLEASE DONT FORGET TO DELETE THIS
+            KeyCode::Backspace => app.pop_typed_text(),
             _ => {
                 match key_event.code.as_char() {
                     Some(character) => app.insert_text(character),
