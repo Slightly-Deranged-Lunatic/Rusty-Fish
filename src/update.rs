@@ -17,10 +17,14 @@ pub fn update(app: &mut App, key_event: KeyEvent) {
             _ => {}
         }
     } else if  app.window == WindowType::Fishing {
-        if key_event.code == KeyCode::Char('q') {app.quit()} // TEMPORARY PLEASE DONT FORGET TO DELETE THIS
-        match key_event.code.as_char() {
-            Some(character) => app.insert_text(character),
-            None => log::info!("Failed to convert {} to a char", key_event.code)
+        match key_event.code {
+            KeyCode::Char('q') => app.quit(), // TEMPORARY PLEASE DONT FORGET TO DELETE THIS
+            _ => {
+                match key_event.code.as_char() {
+                    Some(character) => app.insert_text(character),
+                    None => log::info!("Failed to convert {} to a char", key_event.code)
+                }
+            }
         }
     }
 }
