@@ -6,7 +6,7 @@ use ratatui::{
     widgets::{Block, BorderType, Borders, List, ListItem, Padding, Paragraph, Wrap},
 };
 
-use crate::app::App;
+use crate::{app::App, player::Player};
 
 fn render_border(frame: &mut Frame, app: &mut App, instructions: Line) {
     // Renders the border with instructions at the bottom
@@ -72,6 +72,19 @@ fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: & mut App) {
         .wrap(Wrap { trim: (true) }),
         horizontal_layout[1],
     );
+}
+
+fn render_victory_screen (app: &mut App, frame: &mut Frame, player: &mut Player) {
+    let instructions = Line::from("Use up or down to change selection, press enter to select");
+    render_border(frame, app, instructions);
+    app.set_victory_screen_vec();
+    let list_items = app
+    .list_items
+    .clone()
+    .into_iter()
+    .map(ListItem::new)
+    .collect();
+    render_list(frame, list_items, app);
 }
 
 pub fn render_standard_menu(app: &mut App, frame: &mut Frame, list_items: Vec<ListItem>) {

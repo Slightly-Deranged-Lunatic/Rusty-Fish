@@ -56,6 +56,12 @@ impl App {
             .map(String::from)
             .collect();
     }
+    pub fn set_victory_screen_vec(&mut self) {
+        self.list_items = vec!["Fish again", "Return to main menu"]
+            .into_iter()
+            .map(String::from)
+            .collect();
+    }
     pub fn insert_text(&mut self, character: char) {
         self.typed_text.push(character);
     }
