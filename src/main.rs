@@ -31,7 +31,6 @@ use ratatui::{Terminal, backend::CrosstermBackend};
 use tui::Tui;
 use update::update;
 
-
 fn main() -> Result<()> {
     let project_directory = ProjectDirs::from("", "Deranged Lunatic Apps", "rusty-fish").unwrap();
     directory_functions::make_project_directories(&project_directory);
@@ -72,7 +71,6 @@ fn main() -> Result<()> {
         } else if app.window == WindowType::VictorySceen {
             app.clear_typed_text();
             let _ = tui.draw_victory_screen(&mut player, &mut app);
-
         }
         // Handle events.
         match tui.events.next()? {

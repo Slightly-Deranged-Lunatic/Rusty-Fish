@@ -1,6 +1,9 @@
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 
-use crate::{app::{App, WindowType}, menu_functions::do_action};
+use crate::{
+    app::{App, WindowType},
+    menu_functions::do_action,
+};
 
 pub fn update(app: &mut App, key_event: KeyEvent, menu_windows: &Vec<WindowType>) {
     if menu_windows.contains(&app.window) {
@@ -16,16 +19,14 @@ pub fn update(app: &mut App, key_event: KeyEvent, menu_windows: &Vec<WindowType>
             // Do nothing if the key is not in the above list
             _ => {}
         }
-    } else if  app.window == WindowType::Fishing {
+    } else if app.window == WindowType::Fishing {
         match key_event.code {
             KeyCode::Char('q') => app.quit(), // TEMPORARY PLEASE DONT FORGET TO DELETE THIS
             KeyCode::Backspace => app.pop_typed_text(),
-            _ => {
-                match key_event.code.as_char() {
-                    Some(character) => app.insert_text(character),
-                    None => log::info!("Failed to convert {} to a char", key_event.code)
-                }
-            }
+            _ => match key_event.code.as_char() {
+                Some(character) => app.insert_text(character),
+                None => log::info!("Failed to convert {} to a char", key_event.code),
+            },
         }
     }
 }

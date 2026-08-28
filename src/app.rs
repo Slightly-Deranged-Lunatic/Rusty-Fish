@@ -2,7 +2,8 @@ use ratatui::widgets::ListState;
 
 #[derive(Debug, Default, PartialEq)]
 pub enum WindowType {
-    #[default] Main,
+    #[default]
+    Main,
     Fishing,
     VictorySceen,
 }

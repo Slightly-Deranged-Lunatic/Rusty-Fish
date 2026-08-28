@@ -17,7 +17,7 @@ pub fn make_project_directories(project_directory: &ProjectDirs) {
         // This function has a slim chance to fail anyways so
         match fs::create_dir_all(&path) {
             Ok(_) => {}
-            Err(e) => panic!("Failed to make directory {:?} due to {}", &path, e)
+            Err(e) => panic!("Failed to make directory {:?} due to {}", &path, e),
         }
     }
 }

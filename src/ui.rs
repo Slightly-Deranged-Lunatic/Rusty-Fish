@@ -2,7 +2,7 @@ use ratatui::{
     Frame,
     layout::{Constraint, Layout},
     style::{Color, Style},
-    text::{Text, Line, Span},
+    text::{Line, Span, Text},
     widgets::{Block, BorderType, Borders, List, ListItem, Padding, Paragraph, Wrap},
 };
 
@@ -31,25 +31,30 @@ fn render_list(frame: &mut Frame, list_items: Vec<ListItem>, app: &mut App) {
     frame.render_stateful_widget(list, frame.area(), &mut app.list_state);
 }
 
-fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: & mut App) {
-    let mut character_span_vec:Vec<Span> = Vec::new();
+fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: &mut App) {
+    let mut character_span_vec: Vec<Span> = Vec::new();
 
     for (index, character) in words.iter().enumerate() {
         if app.typed_text.get(index).is_none() {
-            character_span_vec.push(
-                Span::styled(character.to_string(), Style::default().fg(Color::DarkGray))
-            );
+            character_span_vec.push(Span::styled(
+                character.to_string(),
+                Style::default().fg(Color::DarkGray),
+            ));
         } else if app.typed_text[index] == *character {
-            character_span_vec.push(
-                Span::styled(character.to_string(), Style::default().fg(Color::Magenta))
-            );
+            character_span_vec.push(Span::styled(
+                character.to_string(),
+                Style::default().fg(Color::Magenta),
+            ));
         } else if app.typed_text[index] != *character {
-            character_span_vec.push(
-                Span::styled(character.to_string(), Style::default().fg(Color::Red))
-            );
+            character_span_vec.push(Span::styled(
+                character.to_string(),
+                Style::default().fg(Color::Red),
+            ));
         }
     }
-    if words.len() == app.typed_text.len() {app.victory();}
+    if words.len() == app.typed_text.len() {
+        app.victory();
+    }
 
     let text = Text::from(Line::from(character_span_vec));
 
@@ -69,22 +74,22 @@ fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: & mut App) {
 
     frame.render_widget(
         Paragraph::new(text)
-        .block(Block::default().borders(Borders::ALL))
-        .wrap(Wrap { trim: (true) }),
+            .block(Block::default().borders(Borders::ALL))
+            .wrap(Wrap { trim: (true) }),
         horizontal_layout[1],
     );
 }
 
-pub fn render_victory_screen (app: &mut App, frame: &mut Frame, player: &mut Player) {
+pub fn render_victory_screen(app: &mut App, frame: &mut Frame, player: &mut Player) {
     let instructions = Line::from("Use up or down to change selection, press enter to select");
     render_border(frame, app, instructions);
     app.set_victory_screen_vec();
     let list_items = app
-    .list_items
-    .clone()
-    .into_iter()
-    .map(ListItem::new)
-    .collect();
+        .list_items
+        .clone()
+        .into_iter()
+        .map(ListItem::new)
+        .collect();
     render_list(frame, list_items, app);
 }
 
