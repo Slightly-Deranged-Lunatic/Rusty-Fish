@@ -6,7 +6,7 @@ use ratatui::{
     widgets::{Block, BorderType, Borders, List, ListItem, Padding, Paragraph, Wrap},
 };
 
-use crate::{app::App, enums::window_type::WindowType, player::Player};
+use crate::{structs::{app::App, player::Player}, enums::window_type::WindowType};
 
 fn render_border(frame: &mut Frame, app: &mut App, instructions: Line) {
     // Renders the border with instructions at the bottom

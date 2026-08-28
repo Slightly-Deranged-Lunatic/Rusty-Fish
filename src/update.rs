@@ -1,7 +1,7 @@
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 
 use crate::{
-    app::{App},
+    structs::app::{App},
     enums::window_type::WindowType,
     menu_functions::do_action,
 };

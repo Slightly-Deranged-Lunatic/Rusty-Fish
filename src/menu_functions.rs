@@ -1,4 +1,4 @@
-use crate::{app::App, player::Player, ui, enums::window_type::WindowType};
+use crate::{structs::{app::App, player::Player}, ui, enums::window_type::WindowType};
 use directories::ProjectDirs;
 use rand::seq::IndexedRandom;
 use ratatui::Frame;

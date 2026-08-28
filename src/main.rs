@@ -1,5 +1,4 @@
-/// Application.
-pub mod app;
+
 
 /// Terminal events handler.
 pub mod event;
@@ -18,18 +17,17 @@ pub mod menu_functions;
 
 pub mod directory_functions;
 
-pub mod player;
+pub mod structs;
 
 pub mod enums;
 
 use enums::window_type::WindowType;
-use app::{App};
+use structs::{app::App, player::Player};
 use color_eyre::Result;
 use directories::ProjectDirs;
 use event::{Event, EventHandler};
 use ftail::Ftail;
 use log::LevelFilter;
-use player::Player;
 use ratatui::{Terminal, backend::CrosstermBackend};
 use tui::Tui;
 use update::update;
