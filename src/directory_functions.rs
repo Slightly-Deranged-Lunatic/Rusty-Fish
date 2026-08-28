@@ -1,6 +1,5 @@
 use directories::ProjectDirs;
 use reqwest;
-/// Module has all the code related to directories
 use std::fs;
 use std::path::{Path, PathBuf};
 
