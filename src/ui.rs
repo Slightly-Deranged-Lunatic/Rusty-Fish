@@ -31,27 +31,29 @@ fn render_list(frame: &mut Frame, list_items: Vec<ListItem>, app: &mut App) {
     frame.render_stateful_widget(list, frame.area(), &mut app.list_state);
 }
 
+fn make_span(character: &char, color: Color) -> Span<'static> {
+    return Span::styled(
+        character.to_string(),
+        Style::default().fg(color));
+}
+
 fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: &mut App) {
     let mut character_span_vec: Vec<Span> = Vec::new();
+    let untyped_color = Color::DarkGray;
+    let correct_color = Color::Magenta;
+    let incorrect_color = Color::Red;
+
 
     for (index, character) in words.iter().enumerate() {
         if app.typed_text.get(index).is_none() {
-            character_span_vec.push(Span::styled(
-                character.to_string(),
-                Style::default().fg(Color::DarkGray),
-            ));
+            character_span_vec.push(make_span(character, untyped_color));
         } else if app.typed_text[index] == *character {
-            character_span_vec.push(Span::styled(
-                character.to_string(),
-                Style::default().fg(Color::Magenta),
-            ));
+            character_span_vec.push(make_span(character, correct_color));
         } else if app.typed_text[index] != *character {
-            character_span_vec.push(Span::styled(
-                character.to_string(),
-                Style::default().fg(Color::Red),
-            ));
+            character_span_vec.push(make_span(character, incorrect_color));
         }
     }
+
     if words.len() == app.typed_text.len() {
         app.victory();
     }

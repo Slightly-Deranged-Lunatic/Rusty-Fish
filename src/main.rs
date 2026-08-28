@@ -85,3 +85,25 @@ fn main() -> Result<()> {
     tui.exit()?;
     Ok(())
 }
+
+// Cleanup stuff
+// Menu actions should be ultimately made from a MenuActions enum
+//     Allow for IDE suggestions and stuff
+// Function to make a character span in ui, allows code reuse, should take color argument
+// Should be one single function to set the WindowType of App
+    // App.fish() makes sense, however, the more windows there are, the messier it will get
+    // Log this and make sure it actual has WindowType::whatever instead of 'fishing' or 'main'
+    // When the window type is set, the respective function to set the vec should be called too
+// When the WindowType is Victory it should get a new set of words
+// Difficulty enum in player.rs
+    // Easy, Normal, Hard
+    // Won't do anything its just there for the future
+// Delete the temporay q to quit when fishing lol
+// Structs directory
+    // You won't believe what its gonna hold
+// Enums directoy
+    // You won't believe what its gonna hold
+// Cleanup all the imports
+    // Importing code I wrote should go together based off of what it is
+        // Ie all struct imports together, all functions i made together, etc
+// Cleanup functions to remove unused arguements
