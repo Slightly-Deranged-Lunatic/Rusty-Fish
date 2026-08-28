@@ -11,7 +11,7 @@ use ratatui::widgets::ListItem;
 
 pub type CrosstermTerminal = ratatui::Terminal<ratatui::backend::CrosstermBackend<std::io::Stderr>>;
 
-use crate::{app::App, event::EventHandler, menu_functions, player::Player, ui};
+use crate::{app::{App, WindowType}, event::EventHandler, menu_functions, player::Player, ui};
 
 /// Representation of a terminal user interface.
 ///
@@ -55,7 +55,7 @@ impl Tui {
     /// [`Draw`]: tui::Terminal::draw
     /// [`rendering`]: crate::ui:render
     pub fn draw_main_menu(&mut self, app: &mut App) -> Result<()> {
-        app.set_main_menu_vec();
+        app.set_window_type(WindowType::Main);
         let list_items = app
             .list_items
             .clone()

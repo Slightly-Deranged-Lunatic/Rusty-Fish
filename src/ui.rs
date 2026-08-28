@@ -85,7 +85,6 @@ fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: &mut App) {
 pub fn render_victory_screen(app: &mut App, frame: &mut Frame, player: &mut Player) {
     let instructions = Line::from("Use up or down to change selection, press enter to select");
     render_border(frame, app, instructions);
-    app.set_victory_screen_vec();
     let list_items = app
         .list_items
         .clone()

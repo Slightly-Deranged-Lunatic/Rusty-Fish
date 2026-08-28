@@ -47,7 +47,7 @@ impl App {
         self.should_quit = true;
     }
 
-    pub fn set_main_menu_vec(&mut self) {
+    fn set_main_menu_vec(&mut self) {
         // Sets the vector items to be the menu for the main menu
         self.list_items = vec!["Fish", "Some other button", "Another button"]
             .into_iter()
@@ -55,7 +55,7 @@ impl App {
             .collect();
     }
 
-    pub fn set_victory_screen_vec(&mut self) {
+    fn set_victory_screen_vec(&mut self) {
         self.list_items = vec!["Fish again", "Return to main menu"]
             .into_iter()
             .map(String::from)
