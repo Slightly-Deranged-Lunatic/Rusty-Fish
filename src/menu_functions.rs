@@ -1,4 +1,4 @@
-use crate::{app::App, player::Player, ui};
+use crate::{app::App, app::WindowType, player::Player, ui};
 use directories::ProjectDirs;
 use rand::seq::IndexedRandom;
 use serde::{Deserialize, Serialize};
@@ -14,14 +14,22 @@ pub fn do_action(selection: usize, app: &mut App) {
         action
     );
     log::info!("Here is the entire list: {:?}", app.list_items);
-    if action == "Fish" {
-        app.fish();
+    if app.window == WindowType::Main {
+        if action == "Fish" {
+            app.fish();
+        }
+    } else if app.window == WindowType::VictorySceen {
+        if action == "Fish again" {
+            app.fish();
+        } else if action == "Return to main menu" {
+            app.main_menu();
+        }
     }
 }
 
 pub fn fish(project_directory: &ProjectDirs, player: & mut Player, app: &mut App, frame: &mut Frame<'_>, words: Vec<char>) {
     ui::render_fishing_ui(app, frame, words, player);
-}
+} 
 
 pub fn get_random_words(project_directory: &ProjectDirs, player: &Player) -> Vec<char> {
     #[derive(Serialize, Deserialize)]

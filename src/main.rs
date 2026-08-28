@@ -68,11 +68,12 @@ fn main() -> Result<()> {
         if app.window == WindowType::Main {
             let _ = tui.draw_main_menu(&mut app);
         } else if app.window == WindowType::Fishing {
-            while app.typed_text.len() == words.len() {
-                let _ = tui.draw_victory_screen(&mut player, &mut app);
-            }
             let _ = tui.draw_fishing_menu(&project_directory, &mut player, &mut app, words.clone());
-    }
+        } else if app.window == WindowType::VictorySceen {
+            app.clear_typed_text();
+            let _ = tui.draw_victory_screen(&mut player, &mut app);
+
+        }
         // Handle events.
         match tui.events.next()? {
             Event::Tick => {}

@@ -50,6 +50,14 @@ impl App {
         log::info!("Setting the current window to 'Fishing'");
         self.window = WindowType::Fishing;
     }
+    pub fn victory(&mut self) {
+        log::info!("Setting the curent window to 'victoory'");
+        self.window = WindowType::VictorySceen;
+    }
+    pub fn main_menu(&mut self) {
+        log::info!("Setting the current window to 'main'");
+        self.window = WindowType::Main
+    }
     pub fn set_main_menu_vec(&mut self) {
         // Sets the vector items to be the menu for the main menu
         self.list_items = vec!["Fish", "Some other button", "Another button"]
@@ -68,5 +76,8 @@ impl App {
     }
     pub fn pop_typed_text(&mut self) {
         self.typed_text.pop();
+    }
+    pub fn clear_typed_text(&mut self) {
+        self.typed_text.clear();
     }
 }

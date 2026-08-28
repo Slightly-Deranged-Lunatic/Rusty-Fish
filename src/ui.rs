@@ -49,6 +49,7 @@ fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: & mut App) {
             );
         }
     }
+    if words.len() == app.typed_text.len() {app.victory();}
 
     let text = Text::from(Line::from(character_span_vec));
 
