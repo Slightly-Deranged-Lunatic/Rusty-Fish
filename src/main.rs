@@ -60,7 +60,7 @@ fn main() -> Result<()> {
     let mut tui = Tui::new(terminal, events);
     tui.enter()?;
 
-    let words = menu_functions::get_random_words(&project_directory, &player);
+    let mut words = menu_functions::get_random_words(&project_directory, &player);
     // Start the main loop.
     while !app.should_quit {
         // Render the main user interface.
@@ -69,6 +69,7 @@ fn main() -> Result<()> {
         } else if app.window == WindowType::Fishing {
             let _ = tui.draw_fishing_menu(&project_directory, &mut player, &mut app, words.clone());
         } else if app.window == WindowType::VictorySceen {
+            words = menu_functions::get_random_words(&project_directory, &player);
             app.clear_typed_text();
             let _ = tui.draw_victory_screen(&mut player, &mut app);
         }
@@ -87,7 +88,6 @@ fn main() -> Result<()> {
 }
 
 // Cleanup stuff
-// When the WindowType is Victory it should get a new set of words
 // Structs directory
     // You won't believe what its gonna hold
 // Enums directoy
