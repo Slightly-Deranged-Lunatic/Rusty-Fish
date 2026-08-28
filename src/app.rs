@@ -76,6 +76,11 @@ impl App {
 
     pub fn set_window_type(&mut self, window: WindowType) {
         log::info!("Setting the current window to {:?}", window);
+        if window == WindowType::Main {
+            self.set_main_menu_vec();
+        } else if window == WindowType::VictorySceen {
+            self.set_victory_screen_vec();
+        }
         self.window = window;
     }
 }
