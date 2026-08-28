@@ -2,8 +2,8 @@ use ratatui::crossterm::event::{KeyCode, KeyEvent};
 
 use crate::{app::{App, WindowType}, menu_functions::do_action};
 
-pub fn update(app: &mut App, key_event: KeyEvent) {
-    if app.window == WindowType::Main {
+pub fn update(app: &mut App, key_event: KeyEvent, menu_windows: &Vec<WindowType>) {
+    if menu_windows.contains(&app.window) {
         match key_event.code {
             // Match keycode::eventtype here to specific functions, ie
             KeyCode::Char('q') => app.quit(),

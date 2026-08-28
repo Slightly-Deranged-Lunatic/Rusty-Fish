@@ -52,6 +52,8 @@ fn main() -> Result<()> {
     // Create a new player (ill change this later im just lazy)
     let mut player = Player::new();
 
+    let menu_windows: Vec<WindowType> = vec![WindowType::Main, WindowType::VictorySceen];
+
     // Initialize the terminal user interface.
     let backend = CrosstermBackend::new(std::io::stderr());
     let terminal = Terminal::new(backend)?;
@@ -74,7 +76,7 @@ fn main() -> Result<()> {
         // Handle events.
         match tui.events.next()? {
             Event::Tick => {}
-            Event::Key(key_event) => update(&mut app, key_event),
+            Event::Key(key_event) => update(&mut app, key_event, &menu_windows),
             Event::Mouse(_) => {}
             Event::Resize(_, _) => {}
         };
