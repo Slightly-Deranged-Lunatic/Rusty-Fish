@@ -47,18 +47,6 @@ impl App {
         self.should_quit = true;
     }
 
-    pub fn fish(&mut self) {
-        log::info!("Setting the current window to 'Fishing'");
-        self.window = WindowType::Fishing;
-    }
-    pub fn victory(&mut self) {
-        log::info!("Setting the curent window to 'victoory'");
-        self.window = WindowType::VictorySceen;
-    }
-    pub fn main_menu(&mut self) {
-        log::info!("Setting the current window to 'main'");
-        self.window = WindowType::Main
-    }
     pub fn set_main_menu_vec(&mut self) {
         // Sets the vector items to be the menu for the main menu
         self.list_items = vec!["Fish", "Some other button", "Another button"]
@@ -66,19 +54,28 @@ impl App {
             .map(String::from)
             .collect();
     }
+
     pub fn set_victory_screen_vec(&mut self) {
         self.list_items = vec!["Fish again", "Return to main menu"]
             .into_iter()
             .map(String::from)
             .collect();
     }
+
     pub fn insert_text(&mut self, character: char) {
         self.typed_text.push(character);
     }
+
     pub fn pop_typed_text(&mut self) {
         self.typed_text.pop();
     }
+
     pub fn clear_typed_text(&mut self) {
         self.typed_text.clear();
+    }
+
+    pub fn set_window_type(&mut self, window: WindowType) {
+        log::info!("Setting the current window to {:?}", window);
+        self.window = window;
     }
 }

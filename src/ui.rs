@@ -6,7 +6,7 @@ use ratatui::{
     widgets::{Block, BorderType, Borders, List, ListItem, Padding, Paragraph, Wrap},
 };
 
-use crate::{app::App, player::Player};
+use crate::{app::App, app::WindowType, player::Player};
 
 fn render_border(frame: &mut Frame, app: &mut App, instructions: Line) {
     // Renders the border with instructions at the bottom
@@ -55,7 +55,7 @@ fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: &mut App) {
     }
 
     if words.len() == app.typed_text.len() {
-        app.victory();
+        app.set_window_type(WindowType::VictorySceen);
     }
 
     let text = Text::from(Line::from(character_span_vec));
