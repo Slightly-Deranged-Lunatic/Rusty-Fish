@@ -12,12 +12,12 @@ use ratatui::widgets::ListItem;
 pub type CrosstermTerminal = ratatui::Terminal<ratatui::backend::CrosstermBackend<std::io::Stderr>>;
 
 use crate::{
+    structs::{
+        app::App, player::Player
+    },
     enums::window_type::WindowType,
     event::EventHandler,
-    menu_functions,
-    structs::{app::App, player::Player},
-    ui,
-};
+    menu_functions, ui};
 
 /// Representation of a terminal user interface.
 ///
