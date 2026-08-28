@@ -20,7 +20,10 @@ pub mod directory_functions;
 
 pub mod player;
 
-use app::{App, WindowType};
+pub mod enums;
+
+use enums::window_type::WindowType;
+use app::{App};
 use color_eyre::Result;
 use directories::ProjectDirs;
 use event::{Event, EventHandler};

@@ -1,12 +1,6 @@
 use ratatui::widgets::ListState;
+use crate::enums::window_type::WindowType;
 
-#[derive(Debug, Default, PartialEq)]
-pub enum WindowType {
-    #[default]
-    Main,
-    Fishing,
-    VictorySceen,
-}
 
 /// Application.
 #[derive(Debug, Default)]

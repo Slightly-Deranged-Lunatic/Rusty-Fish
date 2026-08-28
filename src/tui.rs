@@ -11,7 +11,7 @@ use ratatui::widgets::ListItem;
 
 pub type CrosstermTerminal = ratatui::Terminal<ratatui::backend::CrosstermBackend<std::io::Stderr>>;
 
-use crate::{app::{App, WindowType}, event::EventHandler, menu_functions, player::Player, ui};
+use crate::{app::{App}, enums::window_type::WindowType, event::EventHandler, menu_functions, player::Player, ui};
 
 /// Representation of a terminal user interface.
 ///

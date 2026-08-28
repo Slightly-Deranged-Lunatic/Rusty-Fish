@@ -8,6 +8,7 @@ use color_eyre::Result;
 use ratatui::crossterm::event::{self, Event as CrosstermEvent, KeyEvent, MouseEvent};
 
 /// Terminal events.
+/// This enum isn't in enums/ because it is not used outside of this file
 #[derive(Clone, Copy, Debug)]
 pub enum Event {
     /// Terminal tick.
