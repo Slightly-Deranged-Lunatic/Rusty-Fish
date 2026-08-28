@@ -19,8 +19,8 @@ pub fn do_action(selection: usize, app: &mut App) {
     }
 }
 
-pub fn fish(project_directory: &ProjectDirs, player: &Player, app: &mut App, frame: &mut Frame<'_>, words: Vec<char>) {
-    ui::render_fishing_ui(app, frame, words);
+pub fn fish(project_directory: &ProjectDirs, player: & mut Player, app: &mut App, frame: &mut Frame<'_>, words: Vec<char>) {
+    ui::render_fishing_ui(app, frame, words, player);
 }
 
 pub fn get_random_words(project_directory: &ProjectDirs, player: &Player) -> Vec<char> {

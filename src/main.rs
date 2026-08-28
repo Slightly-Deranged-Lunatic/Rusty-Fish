@@ -50,7 +50,7 @@ fn main() -> Result<()> {
     let mut app = App::new();
 
     // Create a new player (ill change this later im just lazy)
-    let player = Player::new();
+    let mut player = Player::new();
 
     // Initialize the terminal user interface.
     let backend = CrosstermBackend::new(std::io::stderr());
@@ -66,8 +66,11 @@ fn main() -> Result<()> {
         if app.window == WindowType::Main {
             let _ = tui.draw_main_menu(&mut app);
         } else if app.window == WindowType::Fishing {
-            let _ = tui.draw_fishing_menu(&project_directory, &player, &mut app, words.clone());
-        }
+            while app.typed_text.len() == words.len() {
+                let _ = tui.draw_victory_screen(&mut player, &mut app);
+            }
+            let _ = tui.draw_fishing_menu(&project_directory, &mut player, &mut app, words.clone());
+    }
         // Handle events.
         match tui.events.next()? {
             Event::Tick => {}

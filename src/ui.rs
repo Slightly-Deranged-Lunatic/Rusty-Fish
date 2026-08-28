@@ -74,7 +74,7 @@ fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: & mut App) {
     );
 }
 
-fn render_victory_screen (app: &mut App, frame: &mut Frame, player: &mut Player) {
+pub fn render_victory_screen (app: &mut App, frame: &mut Frame, player: &mut Player) {
     let instructions = Line::from("Use up or down to change selection, press enter to select");
     render_border(frame, app, instructions);
     app.set_victory_screen_vec();
@@ -93,8 +93,8 @@ pub fn render_standard_menu(app: &mut App, frame: &mut Frame, list_items: Vec<Li
     render_list(frame, list_items, app);
 }
 
-pub fn render_fishing_ui(app: &mut App, frame: &mut Frame, words: Vec<char>) {
+pub fn render_fishing_ui(app: &mut App, frame: &mut Frame, words: Vec<char>, player: &mut Player) {
     let instructions = Line::from("Type the text on screen");
     render_border(frame, app, instructions);
-    render_fishing_text(frame, words, app);
+    render_fishing_text(frame, words.clone(), app);
 }

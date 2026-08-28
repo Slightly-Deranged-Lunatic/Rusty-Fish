@@ -67,9 +67,15 @@ impl Tui {
         Ok(())
     }
 
-    pub fn draw_fishing_menu(&mut self, project_directory: &ProjectDirs, player: &Player, app: &mut App, words: Vec<char>) -> Result<()> {
+    pub fn draw_fishing_menu(&mut self, project_directory: &ProjectDirs, player: &mut Player, app: &mut App, words: Vec<char>) -> Result<()> {
         self.terminal
             .draw(|frame| menu_functions::fish(project_directory, player, app, frame, words))?;
+        Ok(())
+    }
+
+    pub fn draw_victory_screen(&mut self, player: &mut Player, app: &mut App,) -> Result<()> {
+        self.terminal
+            .draw(|frame| ui::render_victory_screen(app, frame, player))?;
         Ok(())
     }
 
