@@ -1,5 +1,3 @@
-
-
 /// Terminal events handler.
 pub mod event;
 
@@ -21,14 +19,14 @@ pub mod structs;
 
 pub mod enums;
 
-use enums::window_type::WindowType;
-use structs::{app::App, player::Player};
 use color_eyre::Result;
 use directories::ProjectDirs;
+use enums::window_type::WindowType;
 use event::{Event, EventHandler};
 use ftail::Ftail;
 use log::LevelFilter;
 use ratatui::{Terminal, backend::CrosstermBackend};
+use structs::{app::App, player::Player};
 use tui::Tui;
 use update::update;
 
@@ -90,10 +88,10 @@ fn main() -> Result<()> {
 
 // Cleanup stuff
 // Structs directory
-    // You won't believe what its gonna hold
+// You won't believe what its gonna hold
 // Enums directoy
-    // You won't believe what its gonna hold
+// You won't believe what its gonna hold
 // Cleanup all the imports
-    // Importing code I wrote should go together based off of what it is
-        // Ie all struct imports together, all functions i made together, etc
+// Importing code I wrote should go together based off of what it is
+// Ie all struct imports together, all functions i made together, etc
 // Cleanup functions to remove unused arguements

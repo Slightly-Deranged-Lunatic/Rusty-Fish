@@ -6,7 +6,10 @@ use ratatui::{
     widgets::{Block, BorderType, Borders, List, ListItem, Padding, Paragraph, Wrap},
 };
 
-use crate::{structs::{app::App, player::Player}, enums::window_type::WindowType};
+use crate::{
+    enums::window_type::WindowType,
+    structs::{app::App, player::Player},
+};
 
 fn render_border(frame: &mut Frame, app: &mut App, instructions: Line) {
     // Renders the border with instructions at the bottom
@@ -32,9 +35,7 @@ fn render_list(frame: &mut Frame, list_items: Vec<ListItem>, app: &mut App) {
 }
 
 fn make_span(character: &char, color: Color) -> Span<'static> {
-    return Span::styled(
-        character.to_string(),
-        Style::default().fg(color));
+    return Span::styled(character.to_string(), Style::default().fg(color));
 }
 
 fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: &mut App) {
@@ -42,7 +43,6 @@ fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: &mut App) {
     let untyped_color = Color::DarkGray;
     let correct_color = Color::Magenta;
     let incorrect_color = Color::Red;
-
 
     for (index, character) in words.iter().enumerate() {
         if app.typed_text.get(index).is_none() {

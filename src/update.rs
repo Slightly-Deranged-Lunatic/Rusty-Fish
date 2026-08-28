@@ -1,10 +1,6 @@
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 
-use crate::{
-    structs::app::{App},
-    enums::window_type::WindowType,
-    menu_functions::do_action,
-};
+use crate::{enums::window_type::WindowType, menu_functions, structs::app::App};
 
 pub fn update(app: &mut App, key_event: KeyEvent, menu_windows: &Vec<WindowType>) {
     if menu_windows.contains(&app.window) {
@@ -15,7 +11,7 @@ pub fn update(app: &mut App, key_event: KeyEvent, menu_windows: &Vec<WindowType>
             KeyCode::Char('s') | KeyCode::Down => app.list_state.select_next(),
             KeyCode::Enter => {
                 let selection = app.list_state.selected().unwrap();
-                do_action(selection, app);
+                menu_functions::do_action(selection, app);
             }
             // Do nothing if the key is not in the above list
             _ => {}

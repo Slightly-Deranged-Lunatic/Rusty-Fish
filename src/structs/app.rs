@@ -1,6 +1,5 @@
-use ratatui::widgets::ListState;
 use crate::enums::window_type::WindowType;
-
+use ratatui::widgets::ListState;
 
 /// Application.
 #[derive(Debug, Default)]
