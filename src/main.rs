@@ -85,13 +85,3 @@ fn main() -> Result<()> {
     tui.exit()?;
     Ok(())
 }
-
-// Cleanup stuff
-// Structs directory
-// You won't believe what its gonna hold
-// Enums directoy
-// You won't believe what its gonna hold
-// Cleanup all the imports
-// Importing code I wrote should go together based off of what it is
-// Ie all struct imports together, all functions i made together, etc
-// Cleanup functions to remove unused arguements
