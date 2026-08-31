@@ -6,3 +6,13 @@ pub struct Fish {
     pub biome: Vec<Biome>,
     pub rarity: Rarity,
 }
+
+impl Fish {
+    pub fn new(name: String, biome: Vec<Biome>, rarity: Rarity) -> Self {
+        Fish {
+            name: name,
+            biome: biome,
+            rarity: rarity
+        }
+    }
+}
