@@ -1,14 +1,14 @@
 {
     "Trout" : {
-        "Biome" : ["BackyardPond"],
-        "Rarity" : "Common"
+        "biome" : ["BackyardPond"],
+        "rarity" : "Common"
     },
     "Goldfish" : {
-        "Biome" : ["BackyardPond"],
-        "Rarity" : "Common"
+        "biome" : ["BackyardPond"],
+        "rarity" : "Common"
     },
     "Minnow" : {
-        "Biome" : ["BackyardPond"],
-        "Rarity" : "Rare"
+        "biome" : ["BackyardPond"],
+        "rarity" : "Rare"
     }
 }
