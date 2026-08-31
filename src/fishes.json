@@ -1,0 +1,10 @@
+{
+    "Trout" : {
+        "Biome" : ["BackyardPond"],
+        "Rarity" : "Common"
+    },
+    "Goldfish" : {
+        "Biome" : ["BackyardPond"],
+        "Rarity" : "Common"
+    }
+}
