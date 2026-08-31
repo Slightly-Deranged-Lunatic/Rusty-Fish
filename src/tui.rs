@@ -17,7 +17,8 @@ use crate::{
     },
     enums::window_type::WindowType,
     event::EventHandler,
-    menu_functions, ui};
+    ui::{menu_ui, fishing_ui}    
+};
 
 /// Representation of a terminal user interface.
 ///
@@ -69,7 +70,7 @@ impl Tui {
             .map(ListItem::new)
             .collect();
         self.terminal
-            .draw(|frame| ui::render_standard_menu(app, frame, list_items))?;
+            .draw(|frame| menu_ui::render_standard_menu(app, frame, list_items))?;
         Ok(())
     }
 
@@ -81,13 +82,13 @@ impl Tui {
         words: Vec<char>,
     ) -> Result<()> {
         self.terminal
-            .draw(|frame| menu_functions::fish(project_directory, player, app, frame, words))?;
+            .draw(|frame| fishing_ui::render_fishing_ui(app, frame, words, player))?;
         Ok(())
     }
 
     pub fn draw_victory_screen(&mut self, player: &mut Player, app: &mut App) -> Result<()> {
         self.terminal
-            .draw(|frame| ui::render_victory_screen(app, frame, player))?;
+            .draw(|frame| fishing_ui::render_victory_screen(app, frame, player))?;
         Ok(())
     }
 
