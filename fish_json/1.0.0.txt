@@ -1,0 +1,4 @@
+To any developers this is the version of the json file
+I didn't wanna put it directly in the json because i didn't wanna handle dealing with that new data and it would conflict with the hash map
+This was just the easiest way out
+Please dont forget to rename this file and current_json_version in src/ui/directory_functions.rs if you update fishes.json / change
