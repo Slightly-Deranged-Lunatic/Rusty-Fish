@@ -16,7 +16,6 @@ pub struct App {
     // Typed text for the fishing game
     pub typed_text: Vec<char>,
 }
-
 impl App {
     /// Constructs a new instance of [`App`].
     pub fn new() -> Self {
