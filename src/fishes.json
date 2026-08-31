@@ -6,5 +6,9 @@
     "Goldfish" : {
         "Biome" : ["BackyardPond"],
         "Rarity" : "Common"
+    },
+    "Minnow" : {
+        "Biome" : ["BackyardPond"],
+        "Rarity" : "Rare"
     }
 }
