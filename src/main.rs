@@ -19,6 +19,8 @@ pub mod structs;
 
 pub mod enums;
 
+pub mod logic;
+
 use color_eyre::Result;
 use directories::ProjectDirs;
 use enums::window_type::WindowType;
@@ -29,6 +31,7 @@ use ratatui::{Terminal, backend::CrosstermBackend};
 use structs::{app::App, player::Player};
 use tui::Tui;
 use update::update;
+use logic::fishing_logic;
 
 fn main() -> Result<()> {
     let project_directory = ProjectDirs::from("", "Deranged Lunatic Apps", "rusty-fish").unwrap();
@@ -59,7 +62,7 @@ fn main() -> Result<()> {
     let mut tui = Tui::new(terminal, events);
     tui.enter()?;
 
-    let mut words = menu_functions::get_random_words(&project_directory, &player);
+    let mut words = fishing_logic::get_random_words(&project_directory, &player);
     // Start the main loop.
     while !app.should_quit {
         // Render the main user interface.
@@ -68,7 +71,7 @@ fn main() -> Result<()> {
         } else if app.window == WindowType::Fishing {
             let _ = tui.draw_fishing_menu(&project_directory, &mut player, &mut app, words.clone());
         } else if app.window == WindowType::VictorySceen {
-            words = menu_functions::get_random_words(&project_directory, &player);
+            words = fishing_logic::get_random_words(&project_directory, &player);
             app.clear_typed_text();
             let _ = tui.draw_victory_screen(&mut player, &mut app);
         }
