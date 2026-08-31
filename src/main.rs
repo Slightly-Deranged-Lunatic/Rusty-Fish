@@ -33,7 +33,6 @@ use tui::Tui;
 use update::update;
 use logic::fishing_logic;
 
-use crate::logic::fishing_logic::get_random_fish;
 
 fn main() -> Result<()> {
     let project_directory = ProjectDirs::from("", "Deranged Lunatic Apps", "rusty-fish").unwrap();
@@ -49,13 +48,11 @@ fn main() -> Result<()> {
         directory_functions::download_words_list(&project_directory);
     }
 
-
     // Create an application.
     let mut app = App::new();
 
     // Create a new player (ill change this later im just lazy)
     let mut player = Player::new();
-    get_random_fish(&project_directory, &player);
 
     let menu_windows: Vec<WindowType> = vec![WindowType::Main, WindowType::VictorySceen];
 

@@ -6,8 +6,9 @@ use std::{collections::HashMap, fmt::format, fs, io::BufReader};
 
 use crate::{Player, enums::{
     biomes::Biome,
-    rarity::Rarity
-}
+    rarity::Rarity,
+},
+    structs::fish::Fish
 };
 
 pub fn get_random_words(project_directory: &ProjectDirs, player: &Player) -> Vec<char> {
@@ -48,9 +49,8 @@ pub fn get_random_words(project_directory: &ProjectDirs, player: &Player) -> Vec
     return char_list;
 }
 
-pub fn get_random_fish(project_directory: &ProjectDirs, player: &Player) {
+pub fn get_random_fish(project_directory: &ProjectDirs, player: &Player) -> Fish{
     let fish_list_path = project_directory.data_dir().join(format!("fishes.json"));
-    let fish_list_path = std::path::Path::to_path_buf(std::path::Path::new("/home/pain/Documents/Code/Rusty-Fish/src/fishes.json"));
     let fishes_string = match fs::read_to_string(&fish_list_path) {
         Ok(file) => {
             log::info!("Successfully read the JSON data from {:?}", fish_list_path);
@@ -72,17 +72,12 @@ pub fn get_random_fish(project_directory: &ProjectDirs, player: &Player) {
         rarity: Rarity
     }
 
-    #[derive(Serialize, Deserialize, Debug)]
-    struct Fish {
-        name: Properties,
-    }
-
     let fishes_hash: HashMap<String, Properties> = serde_json::from_str(&fishes_string).unwrap();
     let mut rng = rand::rng();
 
     let fish_vec = fishes_hash.keys().collect::<Vec<_>>();
-    let random_fish = fish_vec.choose(&mut rng).unwrap();
-
-    
-    panic!();
+    let random_fish = fish_vec.choose(&mut rng).unwrap().to_string();
+    log::info!("Chosen fish {}", random_fish);
+    let fish_properties = fishes_hash.get(&random_fish).unwrap();
+    return Fish::new(random_fish, fish_properties.biome.clone(), fish_properties.rarity);
 }
