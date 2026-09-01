@@ -44,12 +44,10 @@ fn main() -> Result<()> {
         .retention_days(7)
         .init()?;
 
-    if directory_functions::should_download_words_list(&project_directory) {
-        directory_functions::download_words_list(&project_directory);
-    }
-
     // Create an application.
     let mut app = App::new();
+
+    directory_functions::update_or_make_data(&project_directory, &app);
 
     // Create a new player (ill change this later im just lazy)
     let mut player = Player::new();

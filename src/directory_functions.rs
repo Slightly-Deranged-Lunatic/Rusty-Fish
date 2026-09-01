@@ -85,7 +85,7 @@ fn should_download_words_list(project_directory: &ProjectDirs) -> bool {
     }
 }
 
-fn should_download_fishes_json(project_directory: &ProjectDirs, app: App) -> bool {
+fn should_download_fishes_json(project_directory: &ProjectDirs, app: &App) -> bool {
     let version_file = project_directory.data_dir().join("fish_json").join("version.txt");
     let binding = fs::read_to_string(version_file).unwrap();
     let version = &binding.lines().collect::<Vec<_>>().first().unwrap_or(&"0").to_string();
@@ -128,7 +128,7 @@ fn get_response(url: String) -> reqwest::blocking::Response {
     return response;
 }
 
-pub fn update_or_make_data(project_directory: &ProjectDirs, app: App) {
+pub fn update_or_make_data(project_directory: &ProjectDirs, app: &App) {
     if should_download_words_list(project_directory) {
         download_words_list(project_directory);
     }
