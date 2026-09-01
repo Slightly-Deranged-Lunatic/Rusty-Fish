@@ -1,5 +1,5 @@
 use directories::ProjectDirs;
-use reqwest;
+use reqwest::{self};
 use std::fs::{self, File};
 use std::path::{Path, PathBuf};
 use std::io::{self, BufRead, BufReader};
@@ -33,16 +33,7 @@ pub fn download_words_list(project_directory: &ProjectDirs) {
     // Actually download the file from the repository
     for list in words_lists_files {
         let url = format!("{}{}", base_url, list);
-        let response = reqwest::blocking::get(&url).unwrap();
-        if !response.status().is_success() {
-            let message = format!(
-                "Response from {} was {} which was not a success. Is Github down?",
-                &url,
-                response.status()
-            );
-            log::error!("{}", message);
-            panic!("{}", message);
-        }
+        let response = get_response(url);
 
         let words_list_file = words_list_directory.join(Path::new(list));
         let _ = match fs::write(&words_list_file, response.text().unwrap()) {
@@ -104,4 +95,18 @@ pub fn should_download_fishes_json(project_directory: &ProjectDirs, app: App) ->
         return false;
     }
 
+}
+
+fn get_response(url: String) -> reqwest::blocking::Response {
+    let response = reqwest::blocking::get(&url).unwrap();
+    if !response.status().is_success() {
+        let message = format!(
+            "Response from {} was {} which was not a success. Is Github down?",
+            &url,
+            response.status()
+        );
+        log::error!("{}", message);
+        panic!("{}", message);
+    }
+    return response;
 }
