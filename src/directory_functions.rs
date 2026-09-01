@@ -111,9 +111,23 @@ fn download_fishes_json(project_directory: &ProjectDirs) {
     fs::create_dir(&json_directory).unwrap();
 
     let fish_json = get_response(fish_json).text().unwrap();
-    fs::write(json_directory.join("fishes.json"), fish_json);
+    let mut directory = json_directory.join("fishes.json"); 
+    match fs::write( &directory, fish_json) {
+        Ok(_) => log::info!("Made {}", directory.to_string_lossy()),
+        Err(e) => {
+            log::error!("Failed to make {} due to {}", directory.to_string_lossy(), e);
+            panic!();
+        }
+    }
     let version = get_response(versions_txt).text().unwrap();
-    fs::write(json_directory.join("version.txt"), version);
+    directory = json_directory.join("version.txt");
+    match fs::write(&directory, version) {
+        Ok(_) => log::info!("Made {}", directory.to_string_lossy()),
+        Err(e) => {
+            log::error!("Failed to make {} due to {}", directory.to_string_lossy(), e);
+            panic!();
+        }
+    }
 }
 
 fn get_response(url: String) -> reqwest::blocking::Response {
