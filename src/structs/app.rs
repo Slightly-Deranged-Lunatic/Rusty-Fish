@@ -21,7 +21,7 @@ impl App {
     pub fn new() -> Self {
         App {
             should_quit: false,
-            version: "Super duper beta".to_owned(),
+            version: "0.9.0 ALPHA".to_owned(),
             name: "Rusty Fish".to_owned(),
             window: WindowType::Main,
             list_state: ListState::default().with_selected(Some(0)),
