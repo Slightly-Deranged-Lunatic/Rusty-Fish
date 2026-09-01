@@ -6,7 +6,7 @@ use std::io::{self, BufRead, BufReader};
 
 use crate::structs::app::App;
 
-fn make_project_directories(project_directory: &ProjectDirs) {
+pub fn make_project_directories(project_directory: &ProjectDirs) {
     // Makes the directories the project needs for stuff
     // At the moment this is only a data directory, however, later on I plan on making a config directory.
     // The above is why this is a function and not just in download_words_list()
