@@ -1,5 +1,5 @@
 use directories::ProjectDirs;
-use reqwest::{self};
+use reqwest::{self, get};
 use std::fs::{self, File};
 use std::path::{Path, PathBuf};
 use std::io::{self, BufRead, BufReader};
@@ -95,6 +95,21 @@ pub fn should_download_fishes_json(project_directory: &ProjectDirs, app: App) ->
         return false;
     }
 
+}
+
+pub fn download_fishes_json(project_directory: &ProjectDirs) {
+    let base_url = "https://raw.githubusercontent.com/Slightly-Deranged-Lunatic/Rusty-Fish/refs/heads/main/fish_json/";
+    let fish_json = format!("{base_url}fishes.json");
+    let versions_txt = format!("{base_url}version.txt");
+    let json_directory = project_directory.data_dir().join("fish_json");
+
+    fs::remove_dir_all(&json_directory).unwrap();
+    fs::create_dir(&json_directory).unwrap();
+
+    let fish_json = get_response(fish_json).text().unwrap();
+    fs::write(json_directory.join("fishes.json"), fish_json);
+    let version = get_response(versions_txt).text().unwrap();
+    fs::write(json_directory.join("version.txt"), version);
 }
 
 fn get_response(url: String) -> reqwest::blocking::Response {
