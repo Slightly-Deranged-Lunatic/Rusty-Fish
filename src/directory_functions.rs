@@ -87,7 +87,10 @@ fn should_download_words_list(project_directory: &ProjectDirs) -> bool {
 
 fn should_download_fishes_json(project_directory: &ProjectDirs, app: &App) -> bool {
     let version_file = project_directory.data_dir().join("fish_json").join("version.txt");
-    let binding = fs::read_to_string(version_file).unwrap();
+    let binding = match fs::read_to_string(version_file) {
+        Ok(value) => value,
+        Err(_) => return true,
+    };
     let version = &binding.lines().collect::<Vec<_>>().first().unwrap_or(&"0").to_string();
     if version != &app.version {
         return true;
