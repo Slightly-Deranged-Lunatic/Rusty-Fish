@@ -46,6 +46,7 @@ pub fn get_random_words(project_directory: &ProjectDirs, player: &Player) -> Vec
         char_list.append(&mut chars_word);
         char_list.push(' ');
     }
+    char_list.pop(); // Pop the last space so you don't have to press space at the end
     return char_list;
 }
 
