@@ -129,7 +129,6 @@ fn get_response(url: String) -> reqwest::blocking::Response {
 }
 
 pub fn update_or_make_data(project_directory: &ProjectDirs, app: App) {
-    make_project_directories(project_directory);
     if should_download_words_list(project_directory) {
         download_words_list(project_directory);
     }
