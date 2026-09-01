@@ -98,12 +98,14 @@ pub fn should_download_fishes_json(project_directory: &ProjectDirs, app: App) ->
 }
 
 pub fn download_fishes_json(project_directory: &ProjectDirs) {
+    log::info!("Downloading fishes_jsoon and version.txt");
     let base_url = "https://raw.githubusercontent.com/Slightly-Deranged-Lunatic/Rusty-Fish/refs/heads/main/fish_json/";
     let fish_json = format!("{base_url}fishes.json");
     let versions_txt = format!("{base_url}version.txt");
     let json_directory = project_directory.data_dir().join("fish_json");
 
     fs::remove_dir_all(&json_directory).unwrap();
+    log::info!("Removed all files in {:?}", &json_directory);
     fs::create_dir(&json_directory).unwrap();
 
     let fish_json = get_response(fish_json).text().unwrap();
