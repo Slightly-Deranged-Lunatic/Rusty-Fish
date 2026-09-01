@@ -1,7 +1,6 @@
 use crate::{
     enums::window_type::WindowType,
-    structs::{app::App, player::Player},
-    ui,
+    structs::{app::App},
 };
 
 

@@ -1,8 +1,7 @@
 use directories::ProjectDirs;
-use reqwest::{self, get};
-use std::fs::{self, File};
+use reqwest::{self};
+use std::fs::{self};
 use std::path::{Path, PathBuf};
-use std::io::{self, BufRead, BufReader};
 
 use crate::structs::app::App;
 

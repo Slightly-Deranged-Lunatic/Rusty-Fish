@@ -1,8 +1,8 @@
 use directories::ProjectDirs;
-use rand::seq::{IndexedRandom, SliceRandom};
+use rand::seq::IndexedRandom;
 use serde::{Deserialize, Serialize};
-use serde_json::{self, Value};
-use std::{collections::HashMap, fmt::format, fs, io::BufReader};
+use serde_json::self;
+use std::{collections::HashMap, fs};
 
 use crate::{Player, enums::{
     biomes::Biome,
@@ -50,7 +50,7 @@ pub fn get_random_words(project_directory: &ProjectDirs, player: &Player) -> Vec
     return char_list;
 }
 
-pub fn get_random_fish(project_directory: &ProjectDirs, player: &Player) -> Fish{
+pub fn get_random_fish(project_directory: &ProjectDirs) -> Fish{
     let fish_list_path = project_directory.data_dir().join(format!("fishes.json"));
     let fishes_string = match fs::read_to_string(&fish_list_path) {
         Ok(file) => {
