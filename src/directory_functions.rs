@@ -6,7 +6,7 @@ use std::io::{self, BufRead, BufReader};
 
 use crate::structs::app::App;
 
-pub fn make_project_directories(project_directory: &ProjectDirs) {
+fn make_project_directories(project_directory: &ProjectDirs) {
     // Makes the directories the project needs for stuff
     // At the moment this is only a data directory, however, later on I plan on making a config directory.
     // The above is why this is a function and not just in download_words_list()
@@ -24,7 +24,7 @@ pub fn make_project_directories(project_directory: &ProjectDirs) {
     }
 }
 
-pub fn download_words_list(project_directory: &ProjectDirs) {
+fn download_words_list(project_directory: &ProjectDirs) {
     // Create project_directory.datadir()/words_list
     let words_list_directory = project_directory.data_dir().join(Path::new("words_lists"));
     let words_lists_files = vec!["easy_words.json", "normal_words.json", "hard_words.json"];
@@ -47,7 +47,7 @@ pub fn download_words_list(project_directory: &ProjectDirs) {
     }
 }
 
-pub fn should_download_words_list(project_directory: &ProjectDirs) -> bool {
+fn should_download_words_list(project_directory: &ProjectDirs) -> bool {
     // Determines if the word list files are there and whether or not they should be downloaded.
     // Returns true if we need to download the words lists again
     // Returns false if not
@@ -85,7 +85,7 @@ pub fn should_download_words_list(project_directory: &ProjectDirs) -> bool {
     }
 }
 
-pub fn should_download_fishes_json(project_directory: &ProjectDirs, app: App) -> bool {
+fn should_download_fishes_json(project_directory: &ProjectDirs, app: App) -> bool {
     let version_file = project_directory.data_dir().join("fish_json").join("version.txt");
     let binding = fs::read_to_string(version_file).unwrap();
     let version = &binding.lines().collect::<Vec<_>>().first().unwrap_or(&"0").to_string();
@@ -97,7 +97,7 @@ pub fn should_download_fishes_json(project_directory: &ProjectDirs, app: App) ->
 
 }
 
-pub fn download_fishes_json(project_directory: &ProjectDirs) {
+download_fishes_json(project_directory: &ProjectDirs) {
     log::info!("Downloading fishes_jsoon and version.txt");
     let base_url = "https://raw.githubusercontent.com/Slightly-Deranged-Lunatic/Rusty-Fish/refs/heads/main/fish_json/";
     let fish_json = format!("{base_url}fishes.json");
@@ -127,3 +127,13 @@ fn get_response(url: String) -> reqwest::blocking::Response {
     }
     return response;
 }
+
+pub fn update_or_make_data(project_directory: &ProjectDirs, app: App) {
+    make_project_directories(project_directory);
+    if should_download_words_list(project_directory) {
+        download_words_list(project_directory);
+    }
+    if should_download_fishes_json(project_directory, app) {
+        download_fishes_json(project_directory);
+    }
+} 
