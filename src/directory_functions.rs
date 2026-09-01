@@ -11,7 +11,7 @@ pub fn make_project_directories(project_directory: &ProjectDirs) {
     // At the moment this is only a data directory, however, later on I plan on making a config directory.
     // The above is why this is a function and not just in download_words_list()
 
-    let data_directory_children = vec!["words_lists", "logs"];
+    let data_directory_children = vec!["words_lists", "logs", "fish_json"];
     for child in data_directory_children {
         let path = project_directory.data_dir().join(Path::new(child));
         // This will also make the parent directories so no need to worry about those
