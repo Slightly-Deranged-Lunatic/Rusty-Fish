@@ -1,7 +1,10 @@
 use directories::ProjectDirs;
 use reqwest;
-use std::fs;
+use std::fs::{self, File};
 use std::path::{Path, PathBuf};
+use std::io::{self, BufRead, BufReader};
+
+use crate::structs::app::App;
 
 pub fn make_project_directories(project_directory: &ProjectDirs) {
     // Makes the directories the project needs for stuff
@@ -89,4 +92,16 @@ pub fn should_download_words_list(project_directory: &ProjectDirs) -> bool {
     } else {
         return true;
     }
+}
+
+pub fn should_download_fishes_json(project_directory: &ProjectDirs, app: App) -> bool {
+    let version_file = project_directory.data_dir().join("fish_json").join("version.txt");
+    let binding = fs::read_to_string(version_file).unwrap();
+    let version = &binding.lines().collect::<Vec<_>>().first().unwrap_or(&"0").to_string();
+    if version != &app.version {
+        return true;
+    } else {
+        return false;
+    }
+
 }
