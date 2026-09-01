@@ -97,7 +97,7 @@ fn should_download_fishes_json(project_directory: &ProjectDirs, app: App) -> boo
 
 }
 
-download_fishes_json(project_directory: &ProjectDirs) {
+fn download_fishes_json(project_directory: &ProjectDirs) {
     log::info!("Downloading fishes_jsoon and version.txt");
     let base_url = "https://raw.githubusercontent.com/Slightly-Deranged-Lunatic/Rusty-Fish/refs/heads/main/fish_json/";
     let fish_json = format!("{base_url}fishes.json");
