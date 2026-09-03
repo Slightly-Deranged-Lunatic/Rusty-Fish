@@ -85,18 +85,25 @@ fn should_download_words_list(project_directory: &ProjectDirs) -> bool {
 }
 
 fn should_download_fishes_json(project_directory: &ProjectDirs, app: &App) -> bool {
-    let version_file = project_directory.data_dir().join("fish_json").join("version.txt");
+    let version_file = project_directory
+        .data_dir()
+        .join("fish_json")
+        .join("version.txt");
     let binding = match fs::read_to_string(version_file) {
         Ok(value) => value,
         Err(_) => return true,
     };
-    let version = &binding.lines().collect::<Vec<_>>().first().unwrap_or(&"0").to_string();
+    let version = &binding
+        .lines()
+        .collect::<Vec<_>>()
+        .first()
+        .unwrap_or(&"0")
+        .to_string();
     if version != &app.version {
         return true;
     } else {
         return false;
     }
-
 }
 
 fn download_fishes_json(project_directory: &ProjectDirs) {
@@ -111,11 +118,15 @@ fn download_fishes_json(project_directory: &ProjectDirs) {
     fs::create_dir(&json_directory).unwrap();
 
     let fish_json = get_response(fish_json).text().unwrap();
-    let mut directory = json_directory.join("fishes.json"); 
-    match fs::write( &directory, fish_json) {
+    let mut directory = json_directory.join("fishes.json");
+    match fs::write(&directory, fish_json) {
         Ok(_) => log::info!("Made {}", directory.to_string_lossy()),
         Err(e) => {
-            log::error!("Failed to make {} due to {}", directory.to_string_lossy(), e);
+            log::error!(
+                "Failed to make {} due to {}",
+                directory.to_string_lossy(),
+                e
+            );
             panic!();
         }
     }
@@ -124,7 +135,11 @@ fn download_fishes_json(project_directory: &ProjectDirs) {
     match fs::write(&directory, version) {
         Ok(_) => log::info!("Made {}", directory.to_string_lossy()),
         Err(e) => {
-            log::error!("Failed to make {} due to {}", directory.to_string_lossy(), e);
+            log::error!(
+                "Failed to make {} due to {}",
+                directory.to_string_lossy(),
+                e
+            );
             panic!();
         }
     }
@@ -151,4 +166,4 @@ pub fn update_or_make_data(project_directory: &ProjectDirs, app: &App) {
     if should_download_fishes_json(project_directory, app) {
         download_fishes_json(project_directory);
     }
-} 
+}

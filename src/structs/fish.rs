@@ -12,7 +12,7 @@ impl Fish {
         Fish {
             name: name,
             biome: biome,
-            rarity: rarity
+            rarity: rarity,
         }
     }
 }

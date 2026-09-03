@@ -1,17 +1,12 @@
 use ratatui::{
-    text::{Text, Span, Line},
-    widgets::{Paragraph, Block, Wrap, Borders, ListItem},
+    Frame,
     layout::{Constraint, Layout},
     style::{Color, Style},
-    Frame
+    text::{Line, Span, Text},
+    widgets::{Block, Borders, ListItem, Paragraph, Wrap},
 };
 
-use crate::{
-    ui::menu_ui,
-    ui::general_ui,
-    App,
-    WindowType
-};
+use crate::{App, WindowType, ui::general_ui, ui::menu_ui};
 
 fn make_span(character: &char, color: Color) -> Span<'static> {
     return Span::styled(character.to_string(), Style::default().fg(color));

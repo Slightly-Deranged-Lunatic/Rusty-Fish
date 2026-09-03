@@ -1,3 +1,3 @@
 pub mod app;
-pub mod player;
 pub mod fish;
+pub mod player;

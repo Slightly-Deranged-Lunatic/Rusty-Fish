@@ -28,7 +28,10 @@ impl App {
             window: WindowType::Main,
             has_window_changed: false,
             list_state: ListState::default().with_selected(Some(0)),
-            list_items: vec!["Fish", "Some other button", "Another button"].into_iter().map(String::from).collect(), // Default main menu vec
+            list_items: vec!["Fish", "Some other button", "Another button"]
+                .into_iter()
+                .map(String::from)
+                .collect(), // Default main menu vec
             typed_text: Vec::new(),
             current_biome: Biome::BackyardPond,
         }
@@ -84,7 +87,7 @@ impl App {
     pub fn set_has_window_changed(&mut self, status: bool) {
         if status {
             self.has_window_changed = true
-        } else  {
+        } else {
             self.has_window_changed = false
         }
     }

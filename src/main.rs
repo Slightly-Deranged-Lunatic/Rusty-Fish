@@ -23,16 +23,15 @@ pub mod logic;
 
 use color_eyre::Result;
 use directories::ProjectDirs;
-use enums::{window_type::WindowType, inventory_item::InventoryItem};
+use enums::{inventory_item::InventoryItem, window_type::WindowType};
 use event::{Event, EventHandler};
 use ftail::Ftail;
 use log::LevelFilter;
+use logic::fishing_logic;
 use ratatui::{Terminal, backend::CrosstermBackend};
 use structs::{app::App, player::Player};
 use tui::Tui;
 use update::update;
-use logic::fishing_logic;
-
 
 fn main() -> Result<()> {
     let project_directory = ProjectDirs::from("", "Deranged Lunatic Apps", "rusty-fish").unwrap();
