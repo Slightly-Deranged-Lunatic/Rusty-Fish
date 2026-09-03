@@ -23,12 +23,12 @@ pub mod logic;
 
 use color_eyre::Result;
 use directories::ProjectDirs;
-use enums::{window_type::WindowType, inventory_item::InventoryItem, rarity::Rarity, biomes::Biome};
+use enums::{window_type::WindowType, inventory_item::InventoryItem};
 use event::{Event, EventHandler};
 use ftail::Ftail;
 use log::LevelFilter;
 use ratatui::{Terminal, backend::CrosstermBackend};
-use structs::{app::App, player::Player, fish::Fish};
+use structs::{app::App, player::Player};
 use tui::Tui;
 use update::update;
 use logic::fishing_logic;
@@ -68,7 +68,7 @@ fn main() -> Result<()> {
         if app.window == WindowType::Main {
             let _ = tui.draw_main_menu(&mut app);
         } else if app.window == WindowType::Fishing {
-            let _ = tui.draw_fishing_menu(&project_directory, &mut player, &mut app, words.clone());
+            let _ = tui.draw_fishing_menu(&mut app, words.clone());
         } else if app.window == WindowType::VictorySceen {
             if app.has_window_changed {
                 words = fishing_logic::get_random_words(&project_directory, &player);
@@ -77,7 +77,7 @@ fn main() -> Result<()> {
                 player.add_to_inventory(InventoryItem::InvFish(catch));
                 app.set_has_window_changed(false);
             }
-            let _ = tui.draw_victory_screen(&mut player, &mut app);
+            let _ = tui.draw_victory_screen(&mut app);
         }
         // Handle events.
         match tui.events.next()? {

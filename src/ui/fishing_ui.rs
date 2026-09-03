@@ -10,7 +10,6 @@ use crate::{
     ui::menu_ui,
     ui::general_ui,
     App,
-    Player,
     WindowType
 };
 
@@ -62,7 +61,7 @@ fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: &mut App) {
     );
 }
 
-pub fn render_victory_screen(app: &mut App, frame: &mut Frame, player: &mut Player) {
+pub fn render_victory_screen(app: &mut App, frame: &mut Frame) {
     let list_items = app
         .list_items
         .clone()
@@ -72,7 +71,7 @@ pub fn render_victory_screen(app: &mut App, frame: &mut Frame, player: &mut Play
     menu_ui::render_standard_menu(app, frame, list_items);
 }
 
-pub fn render_fishing_ui(app: &mut App, frame: &mut Frame, words: Vec<char>, player: &mut Player) {
+pub fn render_fishing_ui(app: &mut App, frame: &mut Frame, words: Vec<char>) {
     let instructions = "Type the text on screen";
     general_ui::render_border(frame, app, instructions);
     render_fishing_text(frame, words.clone(), app);

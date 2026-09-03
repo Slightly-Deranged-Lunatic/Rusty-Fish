@@ -1,7 +1,6 @@
 use std::{io, panic};
 
 use color_eyre::Result;
-use directories::ProjectDirs;
 use ratatui::crossterm::{
     event::{DisableMouseCapture, EnableMouseCapture},
     execute,
@@ -13,9 +12,8 @@ pub type CrosstermTerminal = ratatui::Terminal<ratatui::backend::CrosstermBacken
 
 use crate::{
     structs::{
-        app::App, player::Player
+        app::App
     },
-    enums::window_type::WindowType,
     event::EventHandler,
     ui::{menu_ui, fishing_ui}    
 };
@@ -75,19 +73,17 @@ impl Tui {
 
     pub fn draw_fishing_menu(
         &mut self,
-        project_directory: &ProjectDirs,
-        player: &mut Player,
         app: &mut App,
         words: Vec<char>,
     ) -> Result<()> {
         self.terminal
-            .draw(|frame| fishing_ui::render_fishing_ui(app, frame, words, player))?;
+            .draw(|frame| fishing_ui::render_fishing_ui(app, frame, words))?;
         Ok(())
     }
 
-    pub fn draw_victory_screen(&mut self, player: &mut Player, app: &mut App) -> Result<()> {
+    pub fn draw_victory_screen(&mut self, app: &mut App) -> Result<()> {
         self.terminal
-            .draw(|frame| fishing_ui::render_victory_screen(app, frame, player))?;
+            .draw(|frame| fishing_ui::render_victory_screen(app, frame))?;
         Ok(())
     }
 
