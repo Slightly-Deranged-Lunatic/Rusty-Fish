@@ -75,7 +75,15 @@ impl App {
         } else if window == WindowType::VictorySceen {
             self.set_victory_screen_vec();
         }
-        self.has_window_changed = true;
+        self.set_has_window_changed(true);
         self.window = window;
+    }
+
+    pub fn set_has_window_changed(&mut self, status: bool) {
+        if status {
+            self.has_window_changed = true
+        } else  {
+            self.has_window_changed = false
+        }
     }
 }
