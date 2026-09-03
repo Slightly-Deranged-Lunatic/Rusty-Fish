@@ -6,7 +6,6 @@ pub fn update(app: &mut App, key_event: KeyEvent, menu_windows: &Vec<WindowType>
     if menu_windows.contains(&app.window) {
         match key_event.code {
             // Match keycode::eventtype here to specific functions, ie
-            KeyCode::Char('q') => app.quit(),
             KeyCode::Char('w') | KeyCode::Up => app.list_state.select_previous(),
             KeyCode::Char('s') | KeyCode::Down => app.list_state.select_next(),
             KeyCode::Enter => {

@@ -11,6 +11,8 @@ pub fn do_action(selection: usize, app: &mut App) {
     if app.window == WindowType::Main {
         if action == "Fish" {
             app.set_window_type(WindowType::Fishing);
+        } else if action == "Quit" {
+            app.quit();
         }
     } else if app.window == WindowType::VictorySceen {
         if action == "Fish again" {

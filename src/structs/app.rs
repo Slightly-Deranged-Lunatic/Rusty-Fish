@@ -28,10 +28,7 @@ impl App {
             window: WindowType::Main,
             has_window_changed: false,
             list_state: ListState::default().with_selected(Some(0)),
-            list_items: vec!["Fish", "Some other button", "Another button"]
-                .into_iter()
-                .map(String::from)
-                .collect(), // Default main menu vec
+            list_items: Vec::new(),
             typed_text: Vec::new(),
             current_biome: Biome::BackyardPond,
         }
@@ -48,7 +45,7 @@ impl App {
 
     fn set_main_menu_vec(&mut self) {
         // Sets the vector items to be the menu for the main menu
-        self.list_items = vec!["Fish", "Some other button", "Another button"]
+        self.list_items = vec!["Fish", "Some other button", "Quit"]
             .into_iter()
             .map(String::from)
             .collect();

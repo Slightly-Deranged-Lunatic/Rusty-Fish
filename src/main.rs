@@ -45,6 +45,7 @@ fn main() -> Result<()> {
 
     // Create an application.
     let mut app = App::new();
+    app.set_window_type(WindowType::Main);
 
     directory_functions::update_or_make_data(&project_directory, &app);
 
@@ -93,3 +94,8 @@ fn main() -> Result<()> {
     tui.exit()?;
     Ok(())
 }
+//TODO
+// Menu entry in main menu to view inventory and quit
+// Track WPM and accuracy and display them
+// More fishes
+// Fix every single windows bug
