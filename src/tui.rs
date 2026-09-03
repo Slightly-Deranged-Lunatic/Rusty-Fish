@@ -62,7 +62,6 @@ impl Tui {
     /// [`Draw`]: tui::Terminal::draw
     /// [`rendering`]: crate::ui:render
     pub fn draw_main_menu(&mut self, app: &mut App) -> Result<()> {
-        app.set_window_type(WindowType::Main);
         let list_items = app
             .list_items
             .clone()
