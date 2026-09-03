@@ -45,7 +45,7 @@ impl App {
 
     fn set_main_menu_vec(&mut self) {
         // Sets the vector items to be the menu for the main menu
-        self.list_items = vec!["Fish", "Some other button", "Quit"]
+        self.list_items = vec!["Fish", "View Inventory", "Quit"]
             .into_iter()
             .map(String::from)
             .collect();
@@ -56,6 +56,11 @@ impl App {
             .into_iter()
             .map(String::from)
             .collect();
+    }
+
+    pub fn set_custom_vec(&mut self, mut vec: Vec<String>) {
+        vec.push("Return to main menu".to_string());
+        self.list_items = vec;
     }
 
     pub fn insert_text(&mut self, character: char) {
@@ -78,7 +83,9 @@ impl App {
             self.set_victory_screen_vec();
         }
         self.set_has_window_changed(true);
+   
         self.window = window;
+        log::info!("Set the current window to {:?}", self.window)
     }
 
     pub fn set_has_window_changed(&mut self, status: bool) {

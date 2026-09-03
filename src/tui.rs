@@ -79,6 +79,18 @@ impl Tui {
         Ok(())
     }
 
+    pub fn draw_standard_menu(&mut self, app: &mut App, player: &Player) -> Result<()> {
+        let list_items = app
+            .list_items
+            .clone()
+            .into_iter()
+            .map(ListItem::new)
+            .collect();
+        self.terminal
+            .draw(|frame| menu_ui::render_standard_menu(app, frame, list_items))?;
+        Ok(())
+    }
+
     /// Resets the terminal interface.
     ///
     /// This function is also used for the panic hook to revert

@@ -4,4 +4,5 @@ pub enum WindowType {
     Main,
     Fishing,
     VictorySceen,
+    StandardMenu,
 }

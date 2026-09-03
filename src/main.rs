@@ -52,7 +52,7 @@ fn main() -> Result<()> {
     // Create a new player (ill change this later im just lazy)
     let mut player = Player::new();
 
-    let menu_windows: Vec<WindowType> = vec![WindowType::Main, WindowType::VictorySceen];
+    let menu_windows: Vec<WindowType> = vec![WindowType::Main, WindowType::VictorySceen, WindowType::StandardMenu];
 
     // Initialize the terminal user interface.
     let backend = CrosstermBackend::new(std::io::stderr());
@@ -74,17 +74,18 @@ fn main() -> Result<()> {
                 words = fishing_logic::get_random_words(&project_directory, &player);
                 let catch = fishing_logic::get_random_fish(&project_directory, &app);
                 app.clear_typed_text();
-                player.add_to_inventory(InventoryItem::InvFish(catch.clone()
-        ));
+                player.add_to_inventory(InventoryItem::InvFish(catch.clone()));
                 player.last_caught_fish = catch;
                 app.set_has_window_changed(false);
             }
             let _ = tui.draw_victory_screen(&mut app, &player);
+        } else if app.window == WindowType::StandardMenu {
+            let _ = tui.draw_standard_menu(&mut app, &player);
         }
         // Handle events.
         match tui.events.next()? {
             Event::Tick => {}
-            Event::Key(key_event) => update(&mut app, key_event, &menu_windows),
+            Event::Key(key_event) => update(&mut app, &player, key_event, &menu_windows),
             Event::Mouse(_) => {}
             Event::Resize(_, _) => {}
         };
@@ -95,7 +96,7 @@ fn main() -> Result<()> {
     Ok(())
 }
 //TODO
-// Menu entry in main menu to view inventory and quit
+// Menu entry in main menu to view inventory
 // Track WPM and accuracy and display them
 // More fishes
 // Fix every single windows bug
