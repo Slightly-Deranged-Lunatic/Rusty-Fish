@@ -51,7 +51,7 @@ pub fn get_random_words(project_directory: &ProjectDirs, player: &Player) -> Vec
 }
 
 pub fn get_random_fish(project_directory: &ProjectDirs) -> Fish{
-    let fish_list_path = project_directory.data_dir().join(format!("fishes.json"));
+    let fish_list_path = project_directory.data_dir().join("fish_json").join("fishes.json");
     let fishes_string = match fs::read_to_string(&fish_list_path) {
         Ok(file) => {
             log::info!("Successfully read the JSON data from {:?}", fish_list_path);
