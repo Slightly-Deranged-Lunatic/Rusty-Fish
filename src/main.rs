@@ -91,6 +91,3 @@ fn main() -> Result<()> {
     // Exit the user interface.
     tui.exit()?;
     Ok(())
-}
-// TODO: Make my own type for player inventory
-// Implement player inventory in general lol
