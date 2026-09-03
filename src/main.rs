@@ -72,7 +72,7 @@ fn main() -> Result<()> {
         } else if app.window == WindowType::VictorySceen {
             if app.has_window_changed {
                 words = fishing_logic::get_random_words(&project_directory, &player);
-                let catch = fishing_logic::get_random_fish(&project_directory);
+                let catch = fishing_logic::get_random_fish(&project_directory, &app);
                 app.clear_typed_text();
                 player.add_to_inventory(InventoryItem::InvFish(catch));
                 app.set_has_window_changed(false);
@@ -91,3 +91,4 @@ fn main() -> Result<()> {
     // Exit the user interface.
     tui.exit()?;
     Ok(())
+}

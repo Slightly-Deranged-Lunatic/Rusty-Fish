@@ -1,4 +1,4 @@
-use crate::enums::window_type::WindowType;
+use crate::enums::{biomes::Biome, window_type::WindowType};
 use ratatui::widgets::ListState;
 
 /// Application.
@@ -16,6 +16,7 @@ pub struct App {
     pub list_items: Vec<String>,
     // Typed text for the fishing game
     pub typed_text: Vec<char>,
+    pub current_biome: Biome,
 }
 impl App {
     /// Constructs a new instance of [`App`].
@@ -29,6 +30,7 @@ impl App {
             list_state: ListState::default().with_selected(Some(0)),
             list_items: vec!["Fish", "Some other button", "Another button"].into_iter().map(String::from).collect(), // Default main menu vec
             typed_text: Vec::new(),
+            current_biome: Biome::BackyardPond,
         }
     }
 

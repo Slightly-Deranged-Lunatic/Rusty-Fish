@@ -1,5 +1,5 @@
 use directories::ProjectDirs;
-use rand::seq::IndexedRandom;
+use rand::{distr::{Distribution, weighted::WeightedIndex}, seq::{IndexedRandom}};
 use serde::{Deserialize, Serialize};
 use serde_json::self;
 use std::{collections::HashMap, fs};
@@ -7,8 +7,7 @@ use std::{collections::HashMap, fs};
 use crate::{Player, enums::{
     biomes::Biome,
     rarity::Rarity,
-},
-    structs::fish::Fish
+}, structs::{app::App, fish::Fish}
 };
 
 pub fn get_random_words(project_directory: &ProjectDirs, player: &Player) -> Vec<char> {
@@ -50,7 +49,7 @@ pub fn get_random_words(project_directory: &ProjectDirs, player: &Player) -> Vec
     return char_list;
 }
 
-pub fn get_random_fish(project_directory: &ProjectDirs) -> Fish{
+pub fn get_random_fish(project_directory: &ProjectDirs, app: &App) -> Fish{
     let fish_list_path = project_directory.data_dir().join("fish_json").join("fishes.json");
     let fishes_string = match fs::read_to_string(&fish_list_path) {
         Ok(file) => {
@@ -76,8 +75,22 @@ pub fn get_random_fish(project_directory: &ProjectDirs) -> Fish{
     let fishes_hash: HashMap<String, Properties> = serde_json::from_str(&fishes_string).unwrap();
     let mut rng = rand::rng();
 
+    let weights: Vec<i8> = vec![Rarity::Common as i8, Rarity::Rare as i8];
+    let rarities = vec![Rarity::Common, Rarity::Rare];
+    let dist = WeightedIndex::new(weights).unwrap();
+    let sampled_index = dist.sample(&mut rng);
+    let selected_rarity = rarities[sampled_index];
+    log::info!("Selected rarity is {:?}", selected_rarity);
+
     let fish_vec = fishes_hash.keys().collect::<Vec<_>>();
-    let random_fish = fish_vec.choose(&mut rng).unwrap().to_string();
+    let mut possible_fish:Vec<String> = vec![];
+    for fish in &fish_vec {
+        let fish_properties = fishes_hash.get(fish.to_owned()).unwrap();
+        if fish_properties.biome.contains(&app.current_biome) && fish_properties.rarity == selected_rarity {
+            possible_fish.push(fish.to_string());
+        }
+    }
+    let random_fish = possible_fish.choose(&mut rng).unwrap().to_string();
     log::info!("Chosen fish {}", random_fish);
     let fish_properties = fishes_hash.get(&random_fish).unwrap();
     return Fish::new(random_fish, fish_properties.biome.clone(), fish_properties.rarity);
