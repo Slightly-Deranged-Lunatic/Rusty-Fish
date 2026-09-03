@@ -75,7 +75,7 @@ fn main() -> Result<()> {
                 let catch = fishing_logic::get_random_fish(&project_directory);
                 app.clear_typed_text();
                 player.add_to_inventory(InventoryItem::InvFish(catch));
-                app.set_has_window_changed(true);
+                app.set_has_window_changed(false);
             }
             let _ = tui.draw_victory_screen(&mut player, &mut app);
         }
