@@ -9,6 +9,7 @@ pub struct App {
     pub version: String,
     pub name: String,
     pub window: WindowType,
+    pub has_window_changed: bool,
     // Core menus list_state
     pub list_state: ListState,
     // Menus to display in the List
@@ -24,6 +25,7 @@ impl App {
             version: "0.9.0 ALPHA".to_owned(),
             name: "Rusty Fish".to_owned(),
             window: WindowType::Main,
+            has_window_changed: false,
             list_state: ListState::default().with_selected(Some(0)),
             list_items: Vec::new(),
             typed_text: Vec::new(),
@@ -73,6 +75,7 @@ impl App {
         } else if window == WindowType::VictorySceen {
             self.set_victory_screen_vec();
         }
+        self.has_window_changed = true;
         self.window = window;
     }
 }
