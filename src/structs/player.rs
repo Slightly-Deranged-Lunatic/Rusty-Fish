@@ -23,4 +23,16 @@ impl Player {
         let count = self.inventory.entry(item).or_insert(0);
         *count += 1;
     }
+
+    pub fn get_inventory_as_vec(&self) -> Vec<String> {
+        // Vector is used to we can make a ListItem out of it
+        let mut inventory_as_vec: Vec<String> = vec![];
+        for (item, count) in &self.inventory {
+            log::info!("{:?}", item);
+            match item {
+                InventoryItem::InvFish(item) => inventory_as_vec.push(format!("{} x {}", item.name.clone(), count).to_string()),
+            }
+        }
+        return inventory_as_vec;
+    }
 }
