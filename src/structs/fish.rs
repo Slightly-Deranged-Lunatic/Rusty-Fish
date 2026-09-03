@@ -1,6 +1,6 @@
 use crate::enums::{biomes::Biome, rarity::Rarity};
 
-#[derive(Debug, Default, PartialEq, Eq, Hash)]
+#[derive(Debug, Default, PartialEq, Eq, Hash, Clone)]
 pub struct Fish {
     pub name: String,
     pub biome: Vec<Biome>,

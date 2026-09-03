@@ -29,7 +29,7 @@ use ftail::Ftail;
 use log::LevelFilter;
 use logic::fishing_logic;
 use ratatui::{Terminal, backend::CrosstermBackend};
-use structs::{app::App, player::Player};
+use structs::{app::App, player::Player, fish::Fish};
 use tui::Tui;
 use update::update;
 
@@ -73,10 +73,12 @@ fn main() -> Result<()> {
                 words = fishing_logic::get_random_words(&project_directory, &player);
                 let catch = fishing_logic::get_random_fish(&project_directory, &app);
                 app.clear_typed_text();
-                player.add_to_inventory(InventoryItem::InvFish(catch));
+                player.add_to_inventory(InventoryItem::InvFish(catch.clone()
+        ));
+                player.last_caught_fish = catch;
                 app.set_has_window_changed(false);
             }
-            let _ = tui.draw_victory_screen(&mut app);
+            let _ = tui.draw_victory_screen(&mut app, &player);
         }
         // Handle events.
         match tui.events.next()? {
