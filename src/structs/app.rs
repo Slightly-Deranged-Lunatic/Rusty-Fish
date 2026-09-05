@@ -1,8 +1,10 @@
+use std::time::Instant;
+
 use crate::enums::{biomes::Biome, window_type::WindowType};
 use ratatui::widgets::ListState;
 
 /// Application.
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct App {
     /// should the application exit?
     pub should_quit: bool,
@@ -17,6 +19,10 @@ pub struct App {
     // Typed text for the fishing game
     pub typed_text: Vec<char>,
     pub current_biome: Biome,
+    pub elasped_time: f32,
+    pub start_time: Instant,
+    pub accuracy: f32,
+    pub wpm: f32
 }
 impl App {
     /// Constructs a new instance of [`App`].
@@ -31,6 +37,10 @@ impl App {
             list_items: Vec::new(),
             typed_text: Vec::new(),
             current_biome: Biome::BackyardPond,
+            elasped_time: 0.0,
+            start_time: Instant::now(),
+            accuracy: 0.0,
+            wpm: 0.0,
         }
     }
 
