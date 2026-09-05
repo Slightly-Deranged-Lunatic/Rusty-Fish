@@ -6,6 +6,7 @@ use ratatui::{
     widgets::{Block, Borders, ListItem, Paragraph, Wrap},
 };
 
+use std::time::{Instant};
 use crate::{App, WindowType, structs::player::Player, ui::{general_ui, menu_ui}};
 
 fn make_span(character: &char, color: Color) -> Span<'static> {
@@ -13,6 +14,10 @@ fn make_span(character: &char, color: Color) -> Span<'static> {
 }
 
 fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: &mut App) {
+    if app.has_window_changed {
+        app.start_time = Instant::now();
+        app.has_window_changed = false;
+    }
     let mut character_span_vec: Vec<Span> = Vec::new();
     let untyped_color = Color::DarkGray;
     let correct_color = Color::Magenta;
@@ -29,7 +34,19 @@ fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: &mut App) {
     }
 
     if words.len() == app.typed_text.len() {
+        app.elasped_time = app.start_time.elapsed().as_secs_f32();
+        let mut typo_count:f32 = 0.0;
+        for (index, character)  in app.typed_text.iter().enumerate() {
+            if words[index] != app.typed_text[index] {
+                typo_count += 1.0;
+            }
+        }
+        app.accuracy = (words.len() as f32 - typo_count) / words.len() as f32 * 100.0;
+        let words_typed = app.typed_text.len() as f32 / 5.0;
+        app.wpm = (words_typed / (app.elasped_time / 60.0)) * (app.accuracy / 100.0);
+
         app.set_window_type(WindowType::VictorySceen);
+
     }
 
     let text = Text::from(Line::from(character_span_vec));
