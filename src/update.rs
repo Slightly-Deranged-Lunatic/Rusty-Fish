@@ -1,8 +1,8 @@
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 
-use crate::{enums::window_type::WindowType, menu_functions, structs::{app::App, player::{self, Player}}};
+use crate::{enums::window_type::WindowType, menu_functions, structs::{app::App, fishing_minigame::FishingMinigame, player::{self, Player}}};
 
-pub fn update(app: &mut App, player: &Player, key_event: KeyEvent, menu_windows: &Vec<WindowType>) {
+pub fn update(app: &mut App, fishing_minigame: &mut FishingMinigame, player: &Player, key_event: KeyEvent, menu_windows: &Vec<WindowType>) {
     if menu_windows.contains(&app.window) {
         match key_event.code {
             // Match keycode::eventtype here to specific functions, ie
@@ -18,9 +18,9 @@ pub fn update(app: &mut App, player: &Player, key_event: KeyEvent, menu_windows:
         }
     } else if app.window == WindowType::Fishing {
         match key_event.code {
-            KeyCode::Backspace => app.pop_typed_text(),
+            KeyCode::Backspace => fishing_minigame.pop_typed_text(),
             _ => match key_event.code.as_char() {
-                Some(character) => app.insert_text(character),
+                Some(character) => fishing_minigame.insert_text(character),
                 None => log::info!("Failed to convert {} to a char", key_event.code),
             },
         }

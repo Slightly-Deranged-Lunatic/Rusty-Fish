@@ -29,7 +29,7 @@ use ftail::Ftail;
 use log::LevelFilter;
 use logic::fishing_logic;
 use ratatui::{Terminal, backend::CrosstermBackend};
-use structs::{app::App, player::Player, fish::Fish};
+use structs::{app::App, player::Player, fishing_minigame::FishingMinigame};
 use tui::Tui;
 use update::update;
 
@@ -52,6 +52,10 @@ fn main() -> Result<()> {
     // Create a new player (ill change this later im just lazy)
     let mut player = Player::new();
 
+    let mut words = fishing_logic::get_random_words(&project_directory, &player);
+    let mut catch = fishing_logic::get_random_fish(&project_directory, &app);
+    let mut fishing_minigame = FishingMinigame::new(words, catch);
+
     let menu_windows: Vec<WindowType> = vec![WindowType::Main, WindowType::VictorySceen, WindowType::StandardMenu];
 
     // Initialize the terminal user interface.
@@ -61,31 +65,33 @@ fn main() -> Result<()> {
     let mut tui = Tui::new(terminal, events);
     tui.enter()?;
 
-    let mut words = fishing_logic::get_random_words(&project_directory, &player);
     // Start the main loop.
     while !app.should_quit {
         // Render the main user interface.
         if app.window == WindowType::Main {
             let _ = tui.draw_main_menu(&mut app);
         } else if app.window == WindowType::Fishing {
-            let _ = tui.draw_fishing_menu(&mut app, words.clone());
-        } else if app.window == WindowType::VictorySceen {
             if app.has_window_changed {
                 words = fishing_logic::get_random_words(&project_directory, &player);
-                let catch = fishing_logic::get_random_fish(&project_directory, &app);
-                app.clear_typed_text();
-                player.add_to_inventory(InventoryItem::InvFish(catch.clone()));
-                player.last_caught_fish = catch;
+                catch = fishing_logic::get_random_fish(&project_directory, &app);
+                fishing_minigame = FishingMinigame::new(words, catch);
                 app.set_has_window_changed(false);
             }
-            let _ = tui.draw_victory_screen(&mut app, &player);
+            let _ = tui.draw_fishing_menu(&mut app, &mut fishing_minigame);
+        } else if app.window == WindowType::VictorySceen {
+            if app.has_window_changed {
+                player.add_to_inventory(InventoryItem::InvFish(fishing_minigame.catch.clone()));
+                app.set_has_window_changed(false);
+            }
+            let _ = tui.draw_victory_screen(&mut app, &fishing_minigame, &player);
         } else if app.window == WindowType::StandardMenu {
             let _ = tui.draw_standard_menu(&mut app, &player);
         }
         // Handle events.
         match tui.events.next()? {
             Event::Tick => {}
-            Event::Key(key_event) => update(&mut app, &player, key_event, &menu_windows),
+            Event::Key(key_event) => update(&mut app, &mut fishing_minigame,
+            &player, key_event, &menu_windows),
             Event::Mouse(_) => {}
             Event::Resize(_, _) => {}
         };

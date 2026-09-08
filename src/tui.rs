@@ -11,7 +11,7 @@ use ratatui::widgets::ListItem;
 pub type CrosstermTerminal = ratatui::Terminal<ratatui::backend::CrosstermBackend<std::io::Stderr>>;
 
 use crate::{
-    event::EventHandler, structs::{app::App, fish::Fish, player::Player}, ui::{fishing_ui, menu_ui},
+    event::EventHandler, structs::{app::App, fish::Fish, fishing_minigame::{self, FishingMinigame}, player::Player}, ui::{fishing_ui, menu_ui},
 };
 
 /// Representation of a terminal user interface.
@@ -67,15 +67,15 @@ impl Tui {
         Ok(())
     }
 
-    pub fn draw_fishing_menu(&mut self, app: &mut App, words: Vec<char>) -> Result<()> {
+    pub fn draw_fishing_menu(&mut self, app: &mut App, fishing_minigame: &mut FishingMinigame) -> Result<()> {
         self.terminal
-            .draw(|frame| fishing_ui::render_fishing_ui(app, frame, words))?;
+            .draw(|frame| fishing_ui::render_fishing_ui(app, frame, fishing_minigame))?;
         Ok(())
     }
 
-    pub fn draw_victory_screen(&mut self, app: &mut App, player: &Player) -> Result<()> {
+    pub fn draw_victory_screen(&mut self, app: &mut App, fishing_minigame: &FishingMinigame, player: &Player) -> Result<()> {
         self.terminal
-            .draw(|frame| fishing_ui::render_victory_screen(app, player, frame))?;
+            .draw(|frame| fishing_ui::render_victory_screen(app, fishing_minigame, player, frame))?;
         Ok(())
     }
 

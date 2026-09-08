@@ -7,43 +7,39 @@ use ratatui::{
 };
 
 use std::time::{Instant};
-use crate::{App, WindowType, structs::player::Player, ui::{general_ui, menu_ui}};
+use crate::{App, WindowType, structs::{fishing_minigame::FishingMinigame, player::Player}, ui::{general_ui, menu_ui}};
 
 fn make_span(character: &char, color: Color) -> Span<'static> {
     return Span::styled(character.to_string(), Style::default().fg(color));
 }
 
-fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: &mut App) {
-    if app.has_window_changed {
-        app.start_time = Instant::now();
-        app.has_window_changed = false;
-    }
+fn render_fishing_text(frame: &mut Frame, app: &mut App, fishing_minigame: &mut FishingMinigame) {
     let mut character_span_vec: Vec<Span> = Vec::new();
     let untyped_color = Color::DarkGray;
     let correct_color = Color::Magenta;
     let incorrect_color = Color::Red;
 
-    for (index, character) in words.iter().enumerate() {
-        if app.typed_text.get(index).is_none() {
+    for (index, character) in fishing_minigame.words.iter().enumerate() {
+        if fishing_minigame.typed_text.get(index).is_none() {
             character_span_vec.push(make_span(character, untyped_color));
-        } else if app.typed_text[index] == *character {
+        } else if fishing_minigame.typed_text[index] == *character {
             character_span_vec.push(make_span(character, correct_color));
-        } else if app.typed_text[index] != *character {
+        } else if fishing_minigame.typed_text[index] != *character {
             character_span_vec.push(make_span(character, incorrect_color));
         }
     }
 
-    if words.len() == app.typed_text.len() {
-        app.elasped_time = app.start_time.elapsed().as_secs_f32();
+    if fishing_minigame.words.len() == fishing_minigame.typed_text.len() {
+        fishing_minigame.elasped_time = fishing_minigame.start_time.elapsed().as_secs_f32();
         let mut typo_count:f32 = 0.0;
-        for (index, character)  in app.typed_text.iter().enumerate() {
-            if words[index] != app.typed_text[index] {
+        for (index, character)  in fishing_minigame.typed_text.iter().enumerate() {
+            if fishing_minigame.words[index] != fishing_minigame.typed_text[index] {
                 typo_count += 1.0;
             }
         }
-        app.accuracy = (words.len() as f32 - typo_count) / words.len() as f32 * 100.0;
-        let words_typed = app.typed_text.len() as f32 / 5.0;
-        app.wpm = (words_typed / (app.elasped_time / 60.0)) * (app.accuracy / 100.0);
+        fishing_minigame.accuracy = (fishing_minigame.words.len() as f32 - typo_count) / fishing_minigame.words.len() as f32 * 100.0;
+        let words_typed = fishing_minigame.typed_text.len() as f32 / 5.0;
+        fishing_minigame.wpm = (words_typed / (fishing_minigame.elasped_time / 60.0)) * (fishing_minigame.accuracy / 100.0);
 
         app.set_window_type(WindowType::VictorySceen);
 
@@ -73,7 +69,7 @@ fn render_fishing_text(frame: &mut Frame, words: Vec<char>, app: &mut App) {
     );
 }
 
-pub fn render_victory_screen(app: &mut App, player: &Player, frame: &mut Frame) {
+pub fn render_victory_screen(app: &mut App, fishing_minigame: &FishingMinigame, player: &Player, frame: &mut Frame) {
     let list_items = app
         .list_items
         .clone()
@@ -82,8 +78,8 @@ pub fn render_victory_screen(app: &mut App, player: &Player, frame: &mut Frame) 
         .collect();
     let catch_text = vec![
         Line::from(format!("You caught a {}", player.last_caught_fish.name)),
-        Line::from(format!("Words per minute: {:.2}", app.wpm)),
-        Line::from(format!("Accuracy: {:.2}", app.accuracy))
+        Line::from(format!("Words per minute: {:.2}", fishing_minigame.wpm)),
+        Line::from(format!("Accuracy: {:.2}", fishing_minigame.accuracy))
         ];
     let catch_text = Paragraph::new(catch_text)
         .alignment(Alignment::Center);
@@ -109,8 +105,8 @@ pub fn render_victory_screen(app: &mut App, player: &Player, frame: &mut Frame) 
     );
 }
 
-pub fn render_fishing_ui(app: &mut App, frame: &mut Frame, words: Vec<char>) {
+pub fn render_fishing_ui(app: &mut App, frame: &mut Frame, fishing_minigame: &mut FishingMinigame) {
     let instructions = "Type the text on screen";
     general_ui::render_border(frame, app, instructions);
-    render_fishing_text(frame, words.clone(), app);
+    render_fishing_text(frame,  app, fishing_minigame);
 }
