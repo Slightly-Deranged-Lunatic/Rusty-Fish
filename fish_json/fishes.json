@@ -7,7 +7,27 @@
         "biome" : ["BackyardPond"],
         "rarity" : "Common"
     },
+    "Carp" : {
+        "biome" : ["BackyardPond"],
+        "rarity" : "Common"
+    },
+    "Shubunkin" : {
+        "biome" : ["BackyardPond"],
+        "rarity" : "Common"
+    },
+    "Bass" : {
+        "biome" : ["BackyardPond"],
+        "rarity" : "Common"
+    },
+    "Oranda" : {
+        "biome" : ["BackyardPond"],
+        "rarity" : "Common"
+    },
     "Minnow" : {
+        "biome" : ["BackyardPond"],
+        "rarity" : "Rare"
+    },
+    "Mosquitofish" : {
         "biome" : ["BackyardPond"],
         "rarity" : "Rare"
     }
