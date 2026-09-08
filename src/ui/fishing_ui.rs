@@ -1,7 +1,7 @@
 use ratatui::{
     Frame,
     layout::{Constraint, Layout, Alignment},
-    style::{Color, Style},
+    style::{Color, Style, Modifier, Stylize},
     text::{Line, Span, Text},
     widgets::{Block, Borders, ListItem, Paragraph, Wrap},
 };
@@ -23,9 +23,9 @@ fn render_fishing_text(frame: &mut Frame, app: &mut App, fishing_minigame: &mut 
         if fishing_minigame.typed_text.get(index).is_none() {
             character_span_vec.push(make_span(character, untyped_color));
         } else if fishing_minigame.typed_text[index] == *character {
-            character_span_vec.push(make_span(character, correct_color));
+            character_span_vec.push(make_span(character, correct_color).add_modifier(Modifier::UNDERLINED).light_magenta());
         } else if fishing_minigame.typed_text[index] != *character {
-            character_span_vec.push(make_span(character, incorrect_color));
+            character_span_vec.push(make_span(character, incorrect_color).add_modifier(Modifier::UNDERLINED).light_red());
         }
     }
 
