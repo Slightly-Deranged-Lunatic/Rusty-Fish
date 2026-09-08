@@ -1,4 +1,3 @@
-use std::time::Instant;
 
 use crate::enums::{biomes::Biome, window_type::WindowType};
 use ratatui::widgets::ListState;
@@ -17,13 +16,9 @@ pub struct App {
     // Menus to display in the List
     pub list_items: Vec<String>,
     // Typed text for the fishing game
-    pub typed_text: Vec<char>,
     pub current_biome: Biome,
-    pub elasped_time: f32,
-    pub start_time: Instant,
-    pub accuracy: f32,
-    pub wpm: f32
 }
+
 impl App {
     /// Constructs a new instance of [`App`].
     pub fn new() -> Self {
@@ -35,12 +30,7 @@ impl App {
             has_window_changed: false,
             list_state: ListState::default().with_selected(Some(0)),
             list_items: Vec::new(),
-            typed_text: Vec::new(),
             current_biome: Biome::BackyardPond,
-            elasped_time: 0.0,
-            start_time: Instant::now(),
-            accuracy: 0.0,
-            wpm: 0.0,
         }
     }
 
@@ -71,18 +61,6 @@ impl App {
     pub fn set_custom_vec(&mut self, mut vec: Vec<String>) {
         vec.push("Return to main menu".to_string());
         self.list_items = vec;
-    }
-
-    pub fn insert_text(&mut self, character: char) {
-        self.typed_text.push(character);
-    }
-
-    pub fn pop_typed_text(&mut self) {
-        self.typed_text.pop();
-    }
-
-    pub fn clear_typed_text(&mut self) {
-        self.typed_text.clear();
     }
 
     pub fn set_window_type(&mut self, window: WindowType) {
