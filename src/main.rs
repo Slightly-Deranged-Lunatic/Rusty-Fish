@@ -96,7 +96,5 @@ fn main() -> Result<()> {
     Ok(())
 }
 //TODO
-// Menu entry in main menu to view inventory
-// Track WPM and accuracy and display them
 // More fishes
 // Fix every single windows bug

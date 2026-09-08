@@ -80,7 +80,12 @@ pub fn render_victory_screen(app: &mut App, player: &Player, frame: &mut Frame) 
         .into_iter()
         .map(ListItem::new)
         .collect();
-    let catch_text = Paragraph::new(Line::from(format!("You caught a {}", player.last_caught_fish.name)))
+    let catch_text = vec![
+        Line::from(format!("You caught a {}", player.last_caught_fish.name)),
+        Line::from(format!("Words per minute: {:.2}", app.wpm)),
+        Line::from(format!("Accuracy: {:.2}", app.accuracy))
+        ];
+    let catch_text = Paragraph::new(catch_text)
         .alignment(Alignment::Center);
 
     let vertical_layout = Layout::vertical([
