@@ -58,7 +58,7 @@ fn render_fishing_text(frame: &mut Frame, app: &mut App, fishing_minigame: &mut 
     );
 }
 
-pub fn render_victory_screen(app: &mut App, fishing_minigame: &FishingMinigame, player: &Player, frame: &mut Frame) {
+pub fn render_victory_screen(app: &mut App, fishing_minigame: &FishingMinigame, frame: &mut Frame) {
     let list_items = app
         .list_items
         .clone()
@@ -66,8 +66,8 @@ pub fn render_victory_screen(app: &mut App, fishing_minigame: &FishingMinigame, 
         .map(ListItem::new)
         .collect();
     let catch_text = vec![
-        Line::from(format!("You caught a {}", player.last_caught_fish.name)),
-        Line::from(format!("Words per minute: {:.2}", fishing_minigame.wpm)),
+        Line::from(format!("You caught a {}", fishing_minigame.catch.name)),
+        Line::from(format!("Words per minute: {:.0}", fishing_minigame.wpm)),
         Line::from(format!("Accuracy: {:.2}", fishing_minigame.accuracy))
         ];
     let catch_text = Paragraph::new(catch_text)
