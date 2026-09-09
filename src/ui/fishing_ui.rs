@@ -3,11 +3,10 @@ use ratatui::{
     layout::{Constraint, Layout, Alignment},
     style::{Color, Style, Modifier, Stylize},
     text::{Line, Span, Text},
-    widgets::{Block, Borders, ListItem, Paragraph, Wrap},
+    widgets::{Block, Borders, ListItem, Paragraph, Wrap, Scrollbar},
 };
 
-use std::time::{Instant};
-use crate::{App, WindowType, structs::{fishing_minigame::FishingMinigame, player::Player}, ui::{general_ui, menu_ui}};
+use crate::{App, WindowType, structs::{fishing_minigame::FishingMinigame, player::Player}, ui::{general_ui, menu_ui}, logic::fishing_logic};
 
 fn make_span(character: &char, color: Color) -> Span<'static> {
     return Span::styled(character.to_string(), Style::default().fg(color));
@@ -30,17 +29,7 @@ fn render_fishing_text(frame: &mut Frame, app: &mut App, fishing_minigame: &mut 
     }
 
     if fishing_minigame.words.len() == fishing_minigame.typed_text.len() {
-        fishing_minigame.elasped_time = fishing_minigame.start_time.elapsed().as_secs_f32();
-        let mut typo_count:f32 = 0.0;
-        for (index, character)  in fishing_minigame.typed_text.iter().enumerate() {
-            if fishing_minigame.words[index] != fishing_minigame.typed_text[index] {
-                typo_count += 1.0;
-            }
-        }
-        fishing_minigame.accuracy = (fishing_minigame.words.len() as f32 - typo_count) / fishing_minigame.words.len() as f32 * 100.0;
-        let words_typed = fishing_minigame.typed_text.len() as f32 / 5.0;
-        fishing_minigame.wpm = (words_typed / (fishing_minigame.elasped_time / 60.0)) * (fishing_minigame.accuracy / 100.0);
-
+        fishing_logic::calculate_statistics(fishing_minigame);
         app.set_window_type(WindowType::VictorySceen);
 
     }

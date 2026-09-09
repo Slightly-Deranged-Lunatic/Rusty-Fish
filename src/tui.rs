@@ -75,7 +75,7 @@ impl Tui {
 
     pub fn draw_victory_screen(&mut self, app: &mut App, fishing_minigame: &FishingMinigame, player: &Player) -> Result<()> {
         self.terminal
-            .draw(|frame| fishing_ui::render_victory_screen(app, fishing_minigame, player, frame))?;
+            .draw(|frame| fishing_ui::render_victory_screen(app, fishing_minigame, frame))?;
         Ok(())
     }
 

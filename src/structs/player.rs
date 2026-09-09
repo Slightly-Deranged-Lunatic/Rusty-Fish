@@ -6,7 +6,6 @@ use crate::{enums::{biomes::Biome, inventory_item::InventoryItem, rarity::Rarity
 pub struct Player {
     pub difficulty: String,
     pub inventory: HashMap<InventoryItem, i32>,
-    pub last_caught_fish: Fish,
 }
 
 impl Player {
@@ -14,7 +13,6 @@ impl Player {
         Player {
             difficulty: "normal".to_owned(),
             inventory: HashMap::new(),
-            last_caught_fish: Fish::new("Trout".to_string(), vec![Biome::BackyardPond], Rarity::Common) // This is just placeholder information
         }
     }
 
