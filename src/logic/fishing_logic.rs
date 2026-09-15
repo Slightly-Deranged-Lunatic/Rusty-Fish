@@ -111,13 +111,16 @@ pub fn get_random_fish(project_directory: &ProjectDirs, app: &App) -> Fish {
 pub fn calculate_statistics(fishing_minigame: &mut FishingMinigame) {
     // Calculates the WPM and accuracy of the player and sets the respective value in fishing_minigame
     fishing_minigame.elasped_time = fishing_minigame.start_time.elapsed().as_secs_f32();
-    let mut typo_count:f32 = 0.0;
-    for (index, character)  in fishing_minigame.typed_text.iter().enumerate() {
+    let mut typo_count: f32 = 0.0;
+    for (index, character) in fishing_minigame.typed_text.iter().enumerate() {
         if fishing_minigame.words[index] != fishing_minigame.typed_text[index] {
             typo_count += 1.0;
         }
     }
-    fishing_minigame.accuracy = (fishing_minigame.words.len() as f32 - typo_count) / fishing_minigame.words.len() as f32 * 100.0;
+    fishing_minigame.accuracy = (fishing_minigame.words.len() as f32 - typo_count)
+        / fishing_minigame.words.len() as f32
+        * 100.0;
     let words_typed = fishing_minigame.typed_text.len() as f32 / 5.0;
-    fishing_minigame.wpm = (words_typed / (fishing_minigame.elasped_time / 60.0)) * (fishing_minigame.accuracy / 100.0);
+    fishing_minigame.wpm = (words_typed / (fishing_minigame.elasped_time / 60.0))
+        * (fishing_minigame.accuracy / 100.0);
 }

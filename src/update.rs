@@ -1,8 +1,22 @@
 use ratatui::crossterm::event::{KeyCode, KeyEvent};
 
-use crate::{enums::window_type::WindowType, menu_functions, structs::{app::App, fishing_minigame::FishingMinigame, player::{self, Player}}};
+use crate::{
+    enums::window_type::WindowType,
+    menu_functions,
+    structs::{
+        app::App,
+        fishing_minigame::FishingMinigame,
+        player::{self, Player},
+    },
+};
 
-pub fn update(app: &mut App, fishing_minigame: &mut FishingMinigame, player: &Player, key_event: KeyEvent, menu_windows: &Vec<WindowType>) {
+pub fn update(
+    app: &mut App,
+    fishing_minigame: &mut FishingMinigame,
+    player: &Player,
+    key_event: KeyEvent,
+    menu_windows: &Vec<WindowType>,
+) {
     if menu_windows.contains(&app.window) {
         match key_event.code {
             // Match keycode::eventtype here to specific functions, ie

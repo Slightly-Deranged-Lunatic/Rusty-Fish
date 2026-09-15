@@ -1,6 +1,9 @@
 use std::collections::HashMap;
 
-use crate::{enums::{biomes::Biome, inventory_item::InventoryItem, rarity::Rarity}, structs::fish::Fish};
+use crate::{
+    enums::{biomes::Biome, inventory_item::InventoryItem, rarity::Rarity},
+    structs::fish::Fish,
+};
 
 #[derive(Debug, Default, PartialEq, Eq)]
 pub struct Player {
@@ -28,7 +31,9 @@ impl Player {
         for (item, count) in &self.inventory {
             log::info!("{:?}", item);
             match item {
-                InventoryItem::InvFish(item) => inventory_as_vec.push(format!("{} x {}", item.name.clone(), count).to_string()),
+                InventoryItem::InvFish(item) => {
+                    inventory_as_vec.push(format!("{} x {}", item.name.clone(), count).to_string())
+                }
             }
         }
         return inventory_as_vec;

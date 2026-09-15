@@ -29,7 +29,7 @@ use ftail::Ftail;
 use log::LevelFilter;
 use logic::fishing_logic;
 use ratatui::{Terminal, backend::CrosstermBackend};
-use structs::{app::App, player::Player, fishing_minigame::FishingMinigame};
+use structs::{app::App, fishing_minigame::FishingMinigame, player::Player};
 use tui::Tui;
 use update::update;
 
@@ -56,7 +56,11 @@ fn main() -> Result<()> {
     let mut catch = fishing_logic::get_random_fish(&project_directory, &app);
     let mut fishing_minigame = FishingMinigame::new(words, catch);
 
-    let menu_windows: Vec<WindowType> = vec![WindowType::Main, WindowType::VictorySceen, WindowType::StandardMenu];
+    let menu_windows: Vec<WindowType> = vec![
+        WindowType::Main,
+        WindowType::VictorySceen,
+        WindowType::StandardMenu,
+    ];
 
     // Initialize the terminal user interface.
     let backend = CrosstermBackend::new(std::io::stderr());
@@ -90,18 +94,29 @@ fn main() -> Result<()> {
             match tui.events.next()? {
                 Event::Tick => {}
                 Event::Key(key_event) => {
-                    update(&mut app, &mut fishing_minigame, &player, key_event, &menu_windows);
+                    update(
+                        &mut app,
+                        &mut fishing_minigame,
+                        &player,
+                        key_event,
+                        &menu_windows,
+                    );
                     tui.draw_fishing_menu(&mut app, &mut fishing_minigame);
-                    }
+                }
                 Event::Mouse(_) => {}
                 Event::Resize(_, _) => {}
             }
-        } 
+        }
         // Handle events.
         match tui.events.next()? {
             Event::Tick => {}
-            Event::Key(key_event) => update(&mut app, &mut fishing_minigame,
-            &player, key_event, &menu_windows),
+            Event::Key(key_event) => update(
+                &mut app,
+                &mut fishing_minigame,
+                &player,
+                key_event,
+                &menu_windows,
+            ),
             Event::Mouse(_) => {}
             Event::Resize(_, _) => {}
         };
@@ -113,7 +128,5 @@ fn main() -> Result<()> {
 }
 //TODO
 // Fix every single windows bug
-// Auto scroll with tests
-// Ratatui scrollbar stuff+
 // Look into Styles
 // Function to write to files with logs if the file failes

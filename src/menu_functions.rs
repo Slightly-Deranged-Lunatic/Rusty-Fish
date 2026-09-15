@@ -1,4 +1,7 @@
-use crate::{enums::window_type::WindowType, structs::{app::App, player::Player}};
+use crate::{
+    enums::window_type::WindowType,
+    structs::{app::App, player::Player},
+};
 
 pub fn do_action(selection: usize, app: &mut App, player: &Player) {
     let action = &app.list_items[selection];
@@ -17,7 +20,7 @@ pub fn do_action(selection: usize, app: &mut App, player: &Player) {
         } else if action == "View Inventory" {
             app.set_custom_vec(player.get_inventory_as_vec());
             app.set_window_type(WindowType::StandardMenu);
-            } 
+        }
     } else if app.window == WindowType::VictorySceen {
         if action == "Fish again" {
             app.set_window_type(WindowType::Fishing);

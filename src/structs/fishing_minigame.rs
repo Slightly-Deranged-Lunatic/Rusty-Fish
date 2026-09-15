@@ -1,6 +1,6 @@
 use std::time::Instant;
 
-use crate::{structs::fish::Fish};
+use crate::structs::fish::Fish;
 pub struct FishingMinigame {
     pub typed_text: Vec<char>,
     pub start_time: Instant,
@@ -10,7 +10,7 @@ pub struct FishingMinigame {
     pub wpm: f32,
     pub current_line: usize,
     pub position_in_line: i32,
-    pub catch: Fish
+    pub catch: Fish,
 }
 
 impl FishingMinigame {
@@ -31,7 +31,6 @@ impl FishingMinigame {
     pub fn insert_text(&mut self, character: char) {
         self.typed_text.push(character);
         self.position_in_line += 1;
-        
     }
 
     pub fn pop_typed_text(&mut self) {

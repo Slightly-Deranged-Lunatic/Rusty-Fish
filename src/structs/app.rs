@@ -1,4 +1,3 @@
-
 use crate::enums::{biomes::Biome, window_type::WindowType};
 use ratatui::widgets::ListState;
 
@@ -71,7 +70,7 @@ impl App {
             self.set_victory_screen_vec();
         }
         self.set_has_window_changed(true);
-   
+
         self.window = window;
         log::info!("Set the current window to {:?}", self.window)
     }
