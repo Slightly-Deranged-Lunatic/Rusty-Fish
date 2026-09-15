@@ -9,32 +9,13 @@ use ratatui::{
 use crate::{App, WindowType, structs::{fishing_minigame::FishingMinigame, player::Player}, ui::{general_ui, menu_ui}, logic::fishing_logic};
 
 fn make_span(character: &char, color: Color) -> Span<'static> {
-    return Span::styled(character.to_string(), Style::default().fg(color));
+    return Span::styled(character.to_string(), Style::default().fg(color).add_modifier(Modifier::UNDERLINED));
 }
 
 fn render_fishing_text(frame: &mut Frame, app: &mut App, fishing_minigame: &mut FishingMinigame) {
-    let mut character_span_vec: Vec<Span> = Vec::new();
     let untyped_color = Color::DarkGray;
     let correct_color = Color::Magenta;
     let incorrect_color = Color::Red;
-
-    for (index, character) in fishing_minigame.words.iter().enumerate() {
-        if fishing_minigame.typed_text.get(index).is_none() {
-            character_span_vec.push(make_span(character, untyped_color));
-        } else if fishing_minigame.typed_text[index] == *character {
-            character_span_vec.push(make_span(character, correct_color).add_modifier(Modifier::UNDERLINED).light_magenta());
-        } else if fishing_minigame.typed_text[index] != *character {
-            character_span_vec.push(make_span(character, incorrect_color).add_modifier(Modifier::UNDERLINED).light_red());
-        }
-    }
-
-    if fishing_minigame.words.len() == fishing_minigame.typed_text.len() {
-        fishing_logic::calculate_statistics(fishing_minigame);
-        app.set_window_type(WindowType::VictorySceen);
-
-    }
-
-    let text = Text::from(Line::from(character_span_vec));
 
     let vertical_layout = Layout::vertical([
         Constraint::Percentage(20),
@@ -50,12 +31,77 @@ fn render_fishing_text(frame: &mut Frame, app: &mut App, fishing_minigame: &mut 
     ])
     .split(vertical_layout[1]);
 
-    frame.render_widget(
-        Paragraph::new(text)
-            .block(Block::default().borders(Borders::ALL))
-            .wrap(Wrap { trim: (true) }),
-        horizontal_layout[1],
-    );
+    let test_width = (horizontal_layout[1].width - 2) as usize; // the 2 is used up by the border
+    let mut lines_vec: Vec<Line> = Vec::new();
+    let mut current_line: Line = Line::default();
+    let mut character_span: Span = Span::default();
+    let mut current_word: Vec<Span> = Vec::new();
+    
+    // Make the lines
+    for (index, character) in fishing_minigame.words.iter().enumerate() {
+        // Assign spans to the characters
+        if fishing_minigame.typed_text.get(index).is_none() {
+            character_span = make_span(character, untyped_color);
+        } else if fishing_minigame.typed_text[index] == *character {
+            character_span = make_span(character, correct_color);
+        } else if fishing_minigame.typed_text[index] != *character {
+            character_span = make_span(character, incorrect_color);
+        }
+
+        current_word.push(character_span.clone());
+
+        let is_last_char = index + 1 == fishing_minigame.words.len(); // Used to prevent the last word from getting cut off
+
+        // Space represents the end of a word
+        if *character != ' ' && ! is_last_char { 
+            continue;
+        } 
+
+        if current_line.iter().len() + current_word.len() > test_width {
+            lines_vec.push(current_line.clone());
+            current_line = Line::default();
+            continue;
+        }
+        for span in &current_word {
+                current_line.push_span(span.to_owned());
+            }
+        if is_last_char {
+            lines_vec.push(current_line.clone());
+        }
+        current_word.clear();
+    }
+    
+    if fishing_minigame.words.len() == fishing_minigame.typed_text.len() {
+        fishing_logic::calculate_statistics(fishing_minigame);
+        app.set_window_type(WindowType::VictorySceen);
+        return;
+    }
+
+    let text = Text::from(lines_vec.clone());
+
+    let text = Paragraph::new(text)
+        .block(Block::default()
+            .borders(Borders::ALL))
+        .wrap(Wrap { trim: (true) });
+
+    // Line control stuff
+    if fishing_minigame.position_in_line as usize == lines_vec.get(fishing_minigame.current_line).unwrap().iter().len() {
+        fishing_minigame.current_line += 1;
+        fishing_minigame.position_in_line = 0;
+    } // If user is trying to go back a line 
+    else if fishing_minigame.position_in_line < 0 && ! fishing_minigame.current_line.checked_sub(1).is_none() {
+        fishing_minigame.current_line -= 1;
+        fishing_minigame.position_in_line = lines_vec.get(fishing_minigame.current_line).unwrap().iter().len() as i32 -1
+        // -1 because .len() and fishing_minigame.position_in_line need to be the same, .len doesnt start at 0 basically
+    }
+
+    // makes the position in line 0 becuase you would get a negative position if you backspace at the start and it would mess up auto scroll 
+    if fishing_minigame.position_in_line < 0 {
+        fishing_minigame.position_in_line = 0;
+    }
+
+    frame.render_widget(text.scroll((fishing_minigame.current_line as u16, 0)), horizontal_layout[1]);
+
 }
 
 pub fn render_victory_screen(app: &mut App, fishing_minigame: &FishingMinigame, frame: &mut Frame) {
