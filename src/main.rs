@@ -70,14 +70,6 @@ fn main() -> Result<()> {
         // Render the main user interface.
         if app.window == WindowType::Main {
             let _ = tui.draw_main_menu(&mut app);
-        } else if app.window == WindowType::Fishing {
-            if app.has_window_changed {
-                words = fishing_logic::get_random_words(&project_directory, &player);
-                catch = fishing_logic::get_random_fish(&project_directory, &app);
-                fishing_minigame = FishingMinigame::new(words, catch);
-                app.set_has_window_changed(false);
-            }
-            let _ = tui.draw_fishing_menu(&mut app, &mut fishing_minigame);
         } else if app.window == WindowType::VictorySceen {
             if app.has_window_changed {
                 player.add_to_inventory(InventoryItem::InvFish(fishing_minigame.catch.clone()));
@@ -87,6 +79,24 @@ fn main() -> Result<()> {
         } else if app.window == WindowType::StandardMenu {
             let _ = tui.draw_standard_menu(&mut app, &player);
         }
+        while app.window == WindowType::Fishing {
+            if app.has_window_changed {
+                words = fishing_logic::get_random_words(&project_directory, &player);
+                catch = fishing_logic::get_random_fish(&project_directory, &app);
+                fishing_minigame = FishingMinigame::new(words, catch);
+                tui.draw_fishing_menu(&mut app, &mut fishing_minigame); // Here so it displays initally, without it the user needs to press a key.
+                app.set_has_window_changed(false);
+            }
+            match tui.events.next()? {
+                Event::Tick => {}
+                Event::Key(key_event) => {
+                    update(&mut app, &mut fishing_minigame, &player, key_event, &menu_windows);
+                    tui.draw_fishing_menu(&mut app, &mut fishing_minigame);
+                    }
+                Event::Mouse(_) => {}
+                Event::Resize(_, _) => {}
+            }
+        } 
         // Handle events.
         match tui.events.next()? {
             Event::Tick => {}
@@ -103,3 +113,7 @@ fn main() -> Result<()> {
 }
 //TODO
 // Fix every single windows bug
+// Auto scroll with tests
+// Ratatui scrollbar stuff+
+// Look into Styles
+// Function to write to files with logs if the file failes
