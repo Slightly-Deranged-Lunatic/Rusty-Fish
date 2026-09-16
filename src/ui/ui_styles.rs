@@ -31,7 +31,7 @@ pub fn incorrect_character_style() -> Style {
 }
 
 pub fn untyped_character_style() -> Style {
-    const UNTYPED_CHARACTER_STYLE: Style = Style::new().fg(Color::Gray);
+    const UNTYPED_CHARACTER_STYLE: Style = Style::new().fg(Color::DarkGray);
 
     return UNTYPED_CHARACTER_STYLE;
 }
