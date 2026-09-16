@@ -81,5 +81,7 @@ impl App {
         } else {
             self.has_window_changed = false
         }
+        // Always make sure the list state starts at the top
+        self.list_state.select_first();
     }
 }
