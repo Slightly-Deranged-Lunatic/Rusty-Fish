@@ -1,15 +1,19 @@
 # Rusty Fish
-A rewrite of a project that I keep doing on and off so so so much.
+The final rewrite of a project I keep doing on and off.
 
-A fishing game written in Rust using Ratatui. It will also include some typing whenever that gets done!
+A typing game x fishing game written in Rust.
 
 ## Current Features
+At the moment there isn't much, however, what we do have is the following.
 
-Next to nothing sadly, as this is very incomplete.
+A couple of fish for you to catch, you just have to type 50 words for it!
 
-However, it does feature logging and automatic downloads of words list from a github repo.
+Words per minute and accuracy displayed at the end of the typing test
+
+Inventory
 
 ## Installation
 
-If for whatever reason you want to install this, the only way to do that would unfortunately be building from source, I will add compiled  binaries at a later date.
+### Compiled Binary
+The easiest way to install is to use the latest compiled binary found in the [releases](https://github.com/Slightly-Deranged-Lunatic/Rusty-Fish/releases) tab for your respective operating system
 
