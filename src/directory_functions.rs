@@ -11,7 +11,11 @@ fn write_to_file(file: &Path, contents: &String) {
     match fs::write(file, contents) {
         Ok(_) => log::info!("Succesfully wrote to file {}", file.to_string_lossy()),
         Err(e) => {
-            log::error!("Failed to write to file {} due to {}", file.to_string_lossy(), e);
+            log::error!(
+                "Failed to write to file {} due to {}",
+                file.to_string_lossy(),
+                e
+            );
             panic!("{}", e)
         }
     }
@@ -139,7 +143,7 @@ fn download_fishes_json(project_directory: &ProjectDirs) {
 
 fn get_response(url: String) -> reqwest::blocking::Response {
     let response = reqwest::blocking::get(&url).unwrap();
-    if ! response.status().is_success() {
+    if !response.status().is_success() {
         let message = format!(
             "Response from {} was {} which was not a success. Is Github down?",
             &url,

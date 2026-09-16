@@ -1,5 +1,9 @@
 use ratatui::{
-    Frame, layout::{Alignment, Constraint, Layout}, style::{Color, Modifier, Style, Stylize}, text::{Line, Span, Text, ToSpan}, widgets::{Block, Borders, ListItem, Paragraph, Scrollbar, Wrap},
+    Frame,
+    layout::{Alignment, Constraint, Layout},
+    style::{Color, Modifier, Style, Stylize},
+    text::{Line, Span, Text, ToSpan},
+    widgets::{Block, Borders, ListItem, Paragraph, Scrollbar, Wrap},
 };
 
 use crate::{
@@ -34,11 +38,16 @@ fn render_fishing_text(frame: &mut Frame, app: &mut App, fishing_minigame: &mut 
     for (index, character) in fishing_minigame.words.iter().enumerate() {
         // Assign spans to the characters
         if fishing_minigame.typed_text.get(index).is_none() {
-            character_span = Span::styled(character.to_string(), ui_styles::untyped_character_style());
+            character_span =
+                Span::styled(character.to_string(), ui_styles::untyped_character_style());
         } else if fishing_minigame.typed_text[index] == *character {
-            character_span = Span::styled(character.to_string(), ui_styles::correct_character_style());
+            character_span =
+                Span::styled(character.to_string(), ui_styles::correct_character_style());
         } else if fishing_minigame.typed_text[index] != *character {
-            character_span = Span::styled(character.to_string(), ui_styles::incorrect_character_style());
+            character_span = Span::styled(
+                character.to_string(),
+                ui_styles::incorrect_character_style(),
+            );
         }
 
         current_word.push(character_span.clone());
@@ -125,7 +134,9 @@ pub fn render_victory_screen(app: &mut App, fishing_minigame: &FishingMinigame, 
         Line::from(format!("Words per minute: {:.0}", fishing_minigame.wpm)),
         Line::from(format!("Accuracy: {:.2}", fishing_minigame.accuracy)),
     ];
-    let catch_text = Paragraph::new(catch_text).style(ui_styles::main_text_style()).alignment(Alignment::Center);
+    let catch_text = Paragraph::new(catch_text)
+        .style(ui_styles::main_text_style())
+        .alignment(Alignment::Center);
 
     let vertical_layout = Layout::vertical([
         Constraint::Percentage(5),
