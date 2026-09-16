@@ -7,6 +7,13 @@ pub fn list_style() -> Style {
     return LIST_STYLE;
 }
 
+pub fn main_text_style() -> Style {
+    const MAIN_TEXT_STYLE: Style = Style::new()
+    .fg(Color::Magenta);
+
+    return MAIN_TEXT_STYLE;
+}
+
 pub fn correct_character_style() -> Style {
     const CORRECT_CHARACTER_STYLE: Style = Style::new()
     .fg(Color::Magenta)
