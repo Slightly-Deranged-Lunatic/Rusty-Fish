@@ -1,9 +1,21 @@
 use directories::ProjectDirs;
+use log::error;
 use reqwest::{self};
 use std::fs::{self};
 use std::path::{Path, PathBuf};
 
 use crate::structs::app::App;
+
+fn write_to_file(file: &Path, contents: &String) {
+    // Function to write to file and log any errors
+    match fs::write(file, contents) {
+        Ok(_) => log::info!("Succesfully wrote to file {}", file.to_string_lossy()),
+        Err(e) => {
+            log::error!("Failed to write to file {} due to {}", file.to_string_lossy(), e);
+            panic!("{}", e)
+        }
+    }
+}
 
 pub fn make_project_directories(project_directory: &ProjectDirs) {
     // Makes the directories the project needs for stuff
@@ -35,14 +47,7 @@ fn download_words_list(project_directory: &ProjectDirs) {
         let response = get_response(url);
 
         let words_list_file = words_list_directory.join(Path::new(list));
-        let _ = match fs::write(&words_list_file, response.text().unwrap()) {
-            Ok(_) => log::info!("Successfully made file {:?}", words_list_file),
-            Err(e) => {
-                let message = format!("Failed to make file {:?} due to {}", words_list_file, e);
-                log::error!("{}", message);
-                panic!("{}", message);
-            }
-        };
+        write_to_file(&words_list_file, &response.text().unwrap());
     }
 }
 
@@ -125,35 +130,16 @@ fn download_fishes_json(project_directory: &ProjectDirs) {
 
     let fish_json = get_response(fish_json).text().unwrap();
     let mut directory = json_directory.join("fishes.json");
-    match fs::write(&directory, fish_json) {
-        Ok(_) => log::info!("Made {}", directory.to_string_lossy()),
-        Err(e) => {
-            log::error!(
-                "Failed to make {} due to {}",
-                directory.to_string_lossy(),
-                e
-            );
-            panic!();
-        }
-    }
+    write_to_file(&directory, &fish_json);
+
     let version = get_response(versions_txt).text().unwrap();
     directory = json_directory.join("version.txt");
-    match fs::write(&directory, version) {
-        Ok(_) => log::info!("Made {}", directory.to_string_lossy()),
-        Err(e) => {
-            log::error!(
-                "Failed to make {} due to {}",
-                directory.to_string_lossy(),
-                e
-            );
-            panic!();
-        }
-    }
+    write_to_file(&directory, &version);
 }
 
 fn get_response(url: String) -> reqwest::blocking::Response {
     let response = reqwest::blocking::get(&url).unwrap();
-    if !response.status().is_success() {
+    if ! response.status().is_success() {
         let message = format!(
             "Response from {} was {} which was not a success. Is Github down?",
             &url,
