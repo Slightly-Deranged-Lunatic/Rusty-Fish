@@ -12,7 +12,6 @@ use crate::{
 
 pub fn update(
     app: &mut App,
-    fishing_minigame: &mut FishingMinigame,
     player: &Player,
     key_event: KeyEvent,
     menu_windows: &Vec<WindowType>,
@@ -30,7 +29,12 @@ pub fn update(
             // Do nothing if the key is not in the above list
             _ => {}
         }
-    } else if app.window == WindowType::Fishing {
+    }
+}
+
+// Here because we only want to update the fishing game once a letter has been typed and giving it its own function looked cleaner
+pub fn update_fishing_game(fishing_minigame: &mut FishingMinigame, key_event: KeyEvent, app: &mut App) {
+    if app.window == WindowType::Fishing {
         match key_event.code {
             KeyCode::Backspace => fishing_minigame.pop_typed_text(),
             _ => match key_event.code.as_char() {

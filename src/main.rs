@@ -31,7 +31,7 @@ use logic::fishing_logic;
 use ratatui::{Terminal, backend::CrosstermBackend};
 use structs::{app::App, fishing_minigame::FishingMinigame, player::Player};
 use tui::Tui;
-use update::update;
+use update::{update, update_fishing_game};
 
 fn main() -> Result<()> {
     let project_directory = ProjectDirs::from("", "Deranged Lunatic Apps", "rusty-fish").unwrap();
@@ -94,13 +94,7 @@ fn main() -> Result<()> {
             match tui.events.next()? {
                 Event::Tick => {}
                 Event::Key(key_event) => {
-                    update(
-                        &mut app,
-                        &mut fishing_minigame,
-                        &player,
-                        key_event,
-                        &menu_windows,
-                    );
+                    update_fishing_game(&mut fishing_minigame, key_event, &mut app);
                     let _ = tui.draw_fishing_menu(&mut app, &mut fishing_minigame);
                 }
                 Event::Mouse(_) => {}
@@ -112,7 +106,6 @@ fn main() -> Result<()> {
             Event::Tick => {}
             Event::Key(key_event) => update(
                 &mut app,
-                &mut fishing_minigame,
                 &player,
                 key_event,
                 &menu_windows,
@@ -128,5 +121,3 @@ fn main() -> Result<()> {
 }
 //TODO
 // Fix every single windows bug
-// Look into Styles
-// Function to write to files with logs if the file failes
