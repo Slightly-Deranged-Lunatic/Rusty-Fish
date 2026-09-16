@@ -17,3 +17,6 @@ Inventory
 ### Compiled Binary
 The easiest way to install is to use the latest compiled binary found in the [releases](https://github.com/Slightly-Deranged-Lunatic/Rusty-Fish/releases) tab for your respective operating system
 
+## FAQs
+
+See [here](/FAQs.md)
