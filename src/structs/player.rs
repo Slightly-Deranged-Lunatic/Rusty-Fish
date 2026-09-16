@@ -1,9 +1,6 @@
 use std::collections::HashMap;
 
-use crate::{
-    enums::{biomes::Biome, inventory_item::InventoryItem, rarity::Rarity},
-    structs::fish::Fish,
-};
+use crate::enums::inventory_item::InventoryItem;
 
 #[derive(Debug, Default, PartialEq, Eq)]
 pub struct Player {

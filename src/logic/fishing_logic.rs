@@ -112,7 +112,7 @@ pub fn calculate_statistics(fishing_minigame: &mut FishingMinigame) {
     // Calculates the WPM and accuracy of the player and sets the respective value in fishing_minigame
     fishing_minigame.elasped_time = fishing_minigame.start_time.elapsed().as_secs_f32();
     let mut typo_count: f32 = 0.0;
-    for (index, character) in fishing_minigame.typed_text.iter().enumerate() {
+    for (index, _character) in fishing_minigame.typed_text.iter().enumerate() {
         if fishing_minigame.words[index] != fishing_minigame.typed_text[index] {
             typo_count += 1.0;
         }

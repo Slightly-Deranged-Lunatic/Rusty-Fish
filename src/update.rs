@@ -6,7 +6,7 @@ use crate::{
     structs::{
         app::App,
         fishing_minigame::FishingMinigame,
-        player::{self, Player},
+        player::Player,
     },
 };
 

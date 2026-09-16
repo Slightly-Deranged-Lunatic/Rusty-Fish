@@ -1,15 +1,14 @@
 use ratatui::{
     Frame,
     layout::{Alignment, Constraint, Layout},
-    style::{Color, Modifier, Style, Stylize},
-    text::{Line, Span, Text, ToSpan},
-    widgets::{Block, Borders, ListItem, Paragraph, Scrollbar, Wrap},
+    text::{Line, Span, Text},
+    widgets::{Block, Borders, ListItem, Paragraph, Wrap},
 };
 
 use crate::{
     App, WindowType,
     logic::fishing_logic,
-    structs::{fishing_minigame::FishingMinigame, player::Player},
+    structs::fishing_minigame::FishingMinigame,
     ui::{general_ui, menu_ui, ui_styles},
 };
 

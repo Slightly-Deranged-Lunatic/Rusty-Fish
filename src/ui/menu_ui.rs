@@ -1,6 +1,5 @@
 use ratatui::{
     Frame,
-    style::Color,
     widgets::{Block, List, ListItem, Padding},
 };
 

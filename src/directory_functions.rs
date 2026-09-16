@@ -1,5 +1,4 @@
 use directories::ProjectDirs;
-use log::error;
 use reqwest::{self};
 use std::fs::{self};
 use std::path::{Path, PathBuf};

@@ -14,8 +14,7 @@ use crate::{
     event::EventHandler,
     structs::{
         app::App,
-        fish::Fish,
-        fishing_minigame::{self, FishingMinigame},
+        fishing_minigame::FishingMinigame,
         player::Player,
     },
     ui::{fishing_ui, menu_ui},
@@ -88,14 +87,14 @@ impl Tui {
         &mut self,
         app: &mut App,
         fishing_minigame: &FishingMinigame,
-        player: &Player,
+        _player: &Player,
     ) -> Result<()> {
         self.terminal
             .draw(|frame| fishing_ui::render_victory_screen(app, fishing_minigame, frame))?;
         Ok(())
     }
 
-    pub fn draw_standard_menu(&mut self, app: &mut App, player: &Player) -> Result<()> {
+    pub fn draw_standard_menu(&mut self, app: &mut App, _player: &Player) -> Result<()> {
         let list_items = app
             .list_items
             .clone()

@@ -88,7 +88,7 @@ fn main() -> Result<()> {
                 words = fishing_logic::get_random_words(&project_directory, &player);
                 catch = fishing_logic::get_random_fish(&project_directory, &app);
                 fishing_minigame = FishingMinigame::new(words, catch);
-                tui.draw_fishing_menu(&mut app, &mut fishing_minigame); // Here so it displays initally, without it the user needs to press a key.
+                let _ = tui.draw_fishing_menu(&mut app, &mut fishing_minigame); // Here so it displays initally, without it the user needs to press a key.
                 app.set_has_window_changed(false);
             }
             match tui.events.next()? {
@@ -101,7 +101,7 @@ fn main() -> Result<()> {
                         key_event,
                         &menu_windows,
                     );
-                    tui.draw_fishing_menu(&mut app, &mut fishing_minigame);
+                    let _ = tui.draw_fishing_menu(&mut app, &mut fishing_minigame);
                 }
                 Event::Mouse(_) => {}
                 Event::Resize(_, _) => {}
