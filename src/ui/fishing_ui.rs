@@ -1,32 +1,15 @@
 use ratatui::{
-    Frame,
-    layout::{Alignment, Constraint, Layout},
-    style::{Color, Modifier, Style, Stylize},
-    text::{Line, Span, Text},
-    widgets::{Block, Borders, ListItem, Paragraph, Scrollbar, Wrap},
+    Frame, layout::{Alignment, Constraint, Layout}, style::{Color, Modifier, Style, Stylize}, text::{Line, Span, Text, ToSpan}, widgets::{Block, Borders, ListItem, Paragraph, Scrollbar, Wrap},
 };
 
 use crate::{
     App, WindowType,
     logic::fishing_logic,
     structs::{fishing_minigame::FishingMinigame, player::Player},
-    ui::{general_ui, menu_ui},
+    ui::{general_ui, menu_ui, ui_styles},
 };
 
-fn make_span(character: &char, color: Color) -> Span<'static> {
-    return Span::styled(
-        character.to_string(),
-        Style::default()
-            .fg(color)
-            .add_modifier(Modifier::UNDERLINED),
-    );
-}
-
 fn render_fishing_text(frame: &mut Frame, app: &mut App, fishing_minigame: &mut FishingMinigame) {
-    let untyped_color = Color::DarkGray;
-    let correct_color = Color::Magenta;
-    let incorrect_color = Color::Red;
-
     let vertical_layout = Layout::vertical([
         Constraint::Percentage(20),
         Constraint::Percentage(100),
@@ -51,11 +34,11 @@ fn render_fishing_text(frame: &mut Frame, app: &mut App, fishing_minigame: &mut 
     for (index, character) in fishing_minigame.words.iter().enumerate() {
         // Assign spans to the characters
         if fishing_minigame.typed_text.get(index).is_none() {
-            character_span = make_span(character, untyped_color);
+            character_span = Span::styled(character.to_string(), ui_styles::untyped_character_style());
         } else if fishing_minigame.typed_text[index] == *character {
-            character_span = make_span(character, correct_color);
+            character_span = Span::styled(character.to_string(), ui_styles::correct_character_style());
         } else if fishing_minigame.typed_text[index] != *character {
-            character_span = make_span(character, incorrect_color);
+            character_span = Span::styled(character.to_string(), ui_styles::incorrect_character_style());
         }
 
         current_word.push(character_span.clone());
@@ -136,12 +119,13 @@ pub fn render_victory_screen(app: &mut App, fishing_minigame: &FishingMinigame, 
         .into_iter()
         .map(ListItem::new)
         .collect();
+
     let catch_text = vec![
         Line::from(format!("You caught a {}", fishing_minigame.catch.name)),
         Line::from(format!("Words per minute: {:.0}", fishing_minigame.wpm)),
         Line::from(format!("Accuracy: {:.2}", fishing_minigame.accuracy)),
     ];
-    let catch_text = Paragraph::new(catch_text).alignment(Alignment::Center);
+    let catch_text = Paragraph::new(catch_text).style(ui_styles::main_text_style()).alignment(Alignment::Center);
 
     let vertical_layout = Layout::vertical([
         Constraint::Percentage(5),

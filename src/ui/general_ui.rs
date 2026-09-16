@@ -5,7 +5,7 @@ use ratatui::{
     widgets::{Block, BorderType, Borders},
 };
 
-use crate::App;
+use crate::{App, ui::ui_styles};
 
 pub fn render_border(frame: &mut Frame, app: &mut App, instructions: &str) {
     // Renders the border with instructions at the bottom
@@ -16,7 +16,7 @@ pub fn render_border(frame: &mut Frame, app: &mut App, instructions: &str) {
         .title(title.centered())
         .title_bottom(instructions.centered())
         .borders(Borders::ALL)
-        .border_style(Style::default().fg(Color::Magenta))
+        .border_style(ui_styles::main_text_style())
         .border_type(BorderType::Thick);
     frame.render_widget(border, area);
 }
