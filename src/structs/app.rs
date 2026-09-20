@@ -23,7 +23,7 @@ impl App {
     pub fn new() -> Self {
         App {
             should_quit: false,
-            version: "0.9.0 ALPHA".to_owned(),
+            version: "1.0.0 ALPHA".to_owned(),
             name: "Rusty Fish".to_owned(),
             window: WindowType::Main,
             has_window_changed: false,
