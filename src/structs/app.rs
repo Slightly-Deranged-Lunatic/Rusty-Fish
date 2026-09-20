@@ -14,7 +14,6 @@ pub struct App {
     pub list_state: ListState,
     // Menus to display in the List
     pub list_items: Vec<String>,
-    // Typed text for the fishing game
     pub current_biome: Biome,
 }
 
