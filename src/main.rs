@@ -34,7 +34,7 @@ use tui::Tui;
 use update::{update, update_fishing_game};
 
 fn main() -> Result<()> {
-    let project_directory = ProjectDirs::from("", "Deranged Lunatic Apps", "rusty-fish").unwrap();
+    let project_directory = ProjectDirs::from("", "deranged-lunatic-apps", "rusty-fish").unwrap();
     directory_functions::make_project_directories(&project_directory);
 
     let log_directory = project_directory.data_dir().join("logs");
