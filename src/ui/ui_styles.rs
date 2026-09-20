@@ -15,7 +15,6 @@ pub fn main_text_style() -> Style {
 pub fn correct_character_style() -> Style {
     const CORRECT_CHARACTER_STYLE: Style = Style::new()
         .fg(Color::Magenta)
-        .underline_color(Color::Magenta)
         .add_modifier(Modifier::UNDERLINED);
 
     return CORRECT_CHARACTER_STYLE;
@@ -24,7 +23,6 @@ pub fn correct_character_style() -> Style {
 pub fn incorrect_character_style() -> Style {
     const INCORRECT_CHARACTER_STYLE: Style = Style::new()
         .fg(Color::Red)
-        .underline_color(Color::Red)
         .add_modifier(Modifier::UNDERLINED);
 
     return INCORRECT_CHARACTER_STYLE;
