@@ -12,10 +12,28 @@ Words per minute and accuracy displayed at the end of the typing test
 
 Inventory
 
+## Planned Features (no particular order)
+Shop
+
+Saving
+
+WPM and accuracy trackiang to a file to view later
+
+More fish
+
+More fishing rods
+
+Different biomes
+
+
 ## Installation
 
 ### Compiled Binary
 The easiest way to install is to use the latest compiled binary found in the [releases](https://github.com/Slightly-Deranged-Lunatic/Rusty-Fish/releases) tab for your respective operating system
+
+## Usage
+
+Simply run the downloaded file from the compiled binary and it should run
 
 ## FAQs
 
