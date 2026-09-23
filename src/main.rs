@@ -114,5 +114,3 @@ fn main() -> Result<()> {
     tui.exit()?;
     Ok(())
 }
-//TODO
-// Fix every single windows bug
