@@ -33,6 +33,6 @@ impl Player {
                 }
             }
         }
-        return inventory_as_vec;
+        inventory_as_vec
     }
 }

@@ -104,12 +104,7 @@ fn main() -> Result<()> {
         // Handle events.
         match tui.events.next()? {
             Event::Tick => {}
-            Event::Key(key_event) => update(
-                &mut app,
-                &player,
-                key_event,
-                &menu_windows,
-            ),
+            Event::Key(key_event) => update(&mut app, &player, key_event, &menu_windows),
             Event::Mouse(_) => {}
             Event::Resize(_, _) => {}
         };

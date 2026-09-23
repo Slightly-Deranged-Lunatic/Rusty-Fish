@@ -33,7 +33,7 @@ pub fn make_project_directories(project_directory: &ProjectDirs) {
         // This function has a slim chance to fail anyways so
         match fs::create_dir_all(&path) {
             Ok(_) => {}
-            Err(e) => panic!("Failed to make directory {:?} due to {}", &path, e),
+            Err(e) => panic!("Failed to make directory {:?} due to {}", path, e),
         }
     }
 }
@@ -68,7 +68,7 @@ fn should_download_words_list(project_directory: &ProjectDirs) -> bool {
             path.unwrap()
                 .path()
                 .components()
-                .last()
+                .next_back()
                 .unwrap()
                 .as_os_str(),
         );
@@ -85,11 +85,9 @@ fn should_download_words_list(project_directory: &ProjectDirs) -> bool {
 
     log::info!("local files on system: {:?}", local_files);
     log::info!("Expected files on system: {:?}", expected_files);
-    if local_files == expected_files {
-        return false;
-    } else {
-        return true;
-    }
+
+    local_files != expected_files
+
 }
 
 fn should_download_fishes_json(project_directory: &ProjectDirs, app: &App) -> bool {
@@ -101,7 +99,7 @@ fn should_download_fishes_json(project_directory: &ProjectDirs, app: &App) -> bo
     let version_file_contents = match fs::read_to_string(&version_file) {
         Ok(value) => value,
         Err(error) => {
-            log::error!("Error when trying to read {:?}, {:?}", &version_file, error);
+            log::error!("Error when trying to read {:?}, {:?}", version_file, error);
             return true;
         }
     };
@@ -113,10 +111,10 @@ fn should_download_fishes_json(project_directory: &ProjectDirs, app: &App) -> bo
         .to_string();
     if version != app.version {
         log::info!("Need to download fishes_json!");
-        return true;
+        true
     } else {
         log::info!("Do not need to download fishes_json");
-        return false;
+        false
     }
 }
 
@@ -128,7 +126,7 @@ fn download_fishes_json(project_directory: &ProjectDirs) {
     let json_directory = project_directory.data_dir().join("fish_json");
 
     fs::remove_dir_all(&json_directory).unwrap();
-    log::info!("Removed all files in {:?}", &json_directory);
+    log::info!("Removed all files in {:?}", json_directory);
     fs::create_dir(&json_directory).unwrap();
 
     let fish_json = get_response(fish_json).text().unwrap();
@@ -145,13 +143,13 @@ fn get_response(url: String) -> reqwest::blocking::Response {
     if !response.status().is_success() {
         let message = format!(
             "Response from {} was {} which was not a success. Is Github down?",
-            &url,
+            url,
             response.status()
         );
         log::error!("{}", message);
         panic!("{}", message);
     }
-    return response;
+    response
 }
 
 pub fn update_or_make_data(project_directory: &ProjectDirs, app: &App) {

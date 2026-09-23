@@ -10,9 +10,9 @@ pub struct Fish {
 impl Fish {
     pub fn new(name: String, biome: Vec<Biome>, rarity: Rarity) -> Self {
         Fish {
-            name: name,
-            biome: biome,
-            rarity: rarity,
+            name,
+            biome,
+            rarity,
         }
     }
 }

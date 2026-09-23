@@ -14,7 +14,7 @@ pub fn update(
     app: &mut App,
     player: &Player,
     key_event: KeyEvent,
-    menu_windows: &Vec<WindowType>,
+    menu_windows: &[WindowType],
 ) {
     if menu_windows.contains(&app.window) {
         match key_event.code {

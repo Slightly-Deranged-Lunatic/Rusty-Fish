@@ -18,13 +18,13 @@ impl FishingMinigame {
         FishingMinigame {
             typed_text: Vec::new(),
             start_time: Instant::now(),
-            words: words,
+            words,
             elasped_time: 0.0,
             accuracy: 0.0,
             wpm: 0.0,
             current_line: 0,
             position_in_line: 0,
-            catch: catch,
+            catch,
         }
     }
 

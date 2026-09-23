@@ -49,7 +49,8 @@ pub fn get_random_words(project_directory: &ProjectDirs, player: &Player) -> Vec
         char_list.push(' ');
     }
     char_list.pop(); // Pop the last space so you don't have to press space at the end
-    return char_list;
+
+    char_list
 }
 
 pub fn get_random_fish(project_directory: &ProjectDirs, app: &App) -> Fish {
@@ -81,8 +82,8 @@ pub fn get_random_fish(project_directory: &ProjectDirs, app: &App) -> Fish {
     let fishes_hash: HashMap<String, Properties> = serde_json::from_str(&fishes_string).unwrap();
     let mut rng = rand::rng();
 
-    let weights: Vec<i8> = vec![Rarity::Common as i8, Rarity::Rare as i8];
-    let rarities = vec![Rarity::Common, Rarity::Rare];
+    let weights:[i8; 2] = [Rarity::Common as i8, Rarity::Rare as i8];
+    let rarities = [Rarity::Common, Rarity::Rare];
     let dist = WeightedIndex::new(weights).unwrap();
     let sampled_index = dist.sample(&mut rng);
     let selected_rarity = rarities[sampled_index];
@@ -101,11 +102,12 @@ pub fn get_random_fish(project_directory: &ProjectDirs, app: &App) -> Fish {
     let random_fish = possible_fish.choose(&mut rng).unwrap().to_string();
     log::info!("Chosen fish {}", random_fish);
     let fish_properties = fishes_hash.get(&random_fish).unwrap();
-    return Fish::new(
+    
+    Fish::new(
         random_fish,
         fish_properties.biome.clone(),
         fish_properties.rarity,
-    );
+    )
 }
 
 pub fn calculate_statistics(fishing_minigame: &mut FishingMinigame) {

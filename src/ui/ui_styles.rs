@@ -4,13 +4,13 @@ use std::env::consts::OS;
 pub fn list_style() -> Style {
     let style: Style = Style::new().fg(Color::Magenta);
 
-    return style;
+    style
 }
 
 pub fn main_text_style() -> Style {
     let style: Style = Style::new().fg(Color::Magenta);
 
-    return style;
+    style
 }
 
 pub fn correct_character_style() -> Style {
@@ -23,7 +23,7 @@ pub fn correct_character_style() -> Style {
         style = style.underline_color(Color::Magenta);
     }
 
-    return style;
+    style
 }
 
 pub fn incorrect_character_style() -> Style {
@@ -36,11 +36,11 @@ pub fn incorrect_character_style() -> Style {
         style = style.underline_color(Color::Red);
     }
 
-    return style;
+    style
 }
 
 pub fn untyped_character_style() -> Style {
     let style: Style = Style::new().fg(Color::DarkGray);
 
-    return style;
+    style
 }

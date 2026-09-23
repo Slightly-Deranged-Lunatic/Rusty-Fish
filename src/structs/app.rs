@@ -75,11 +75,7 @@ impl App {
     }
 
     pub fn set_has_window_changed(&mut self, status: bool) {
-        if status {
-            self.has_window_changed = true
-        } else {
-            self.has_window_changed = false
-        }
+        self.has_window_changed = status;
         // Always make sure the list state starts at the top
         self.list_state.select_first();
     }
