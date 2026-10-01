@@ -7,7 +7,6 @@ use ratatui::{
 
 use crate::{
     App, WindowType,
-    logic::fishing_logic,
     structs::fishing_minigame::FishingMinigame,
     ui::{general_ui, menu_ui, ui_styles},
 };
@@ -73,7 +72,7 @@ fn render_fishing_text(frame: &mut Frame, app: &mut App, fishing_minigame: &mut 
     }
 
     if fishing_minigame.words.len() == fishing_minigame.typed_text.len() {
-        fishing_logic::calculate_statistics(fishing_minigame);
+        fishing_minigame.calculate_statistics();
         app.set_window_type(WindowType::VictorySceen);
         return;
     }

@@ -42,7 +42,7 @@ impl FishingMinigame {
             wpm: 0.0,
             current_line: 0,
             position_in_line: 0,
-            catch: Self::get_random_fish(&project_directory, &app),
+            catch: Self::get_random_fish(project_directory, app),
         }
     }
 

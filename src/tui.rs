@@ -17,6 +17,7 @@ use crate::{
         fishing_minigame::FishingMinigame,
         player::Player,
     },
+    enums::inventory_item::InventoryItem::{self, InvFish},
     ui::{fishing_ui, menu_ui},
 };
 
@@ -87,8 +88,12 @@ impl Tui {
         &mut self,
         app: &mut App,
         fishing_minigame: &FishingMinigame,
-        _player: &Player,
+        player: &mut Player,
     ) -> Result<()> {
+        if app.has_window_changed {
+            player.add_to_inventory(InventoryItem::InvFish(fishing_minigame.catch.clone()));
+            app.set_has_window_changed(false);
+        }
         self.terminal
             .draw(|frame| fishing_ui::render_victory_screen(app, fishing_minigame, frame))?;
         Ok(())

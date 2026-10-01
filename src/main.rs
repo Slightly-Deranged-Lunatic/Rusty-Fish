@@ -23,11 +23,10 @@ pub mod logic;
 
 use color_eyre::Result;
 use directories::ProjectDirs;
-use enums::{inventory_item::InventoryItem, window_type::WindowType};
+use enums::window_type::WindowType;
 use event::{Event, EventHandler};
 use ftail::Ftail;
 use log::LevelFilter;
-use logic::fishing_logic;
 use ratatui::{Terminal, backend::CrosstermBackend};
 use structs::{app::App, fishing_minigame::FishingMinigame, player::Player};
 use tui::Tui;
@@ -51,11 +50,7 @@ fn main() -> Result<()> {
 
     // Create a new player (ill change this later im just lazy)
     let mut player = Player::new();
-
-    let mut words = fishing_logic::get_random_words(&project_directory, &player);
-    let mut catch = fishing_logic::get_random_fish(&project_directory, &app);
-    let mut fishing_minigame = FishingMinigame::new(words, catch);
-
+    let mut fishing_minigame = FishingMinigame::new(&project_directory, &app, &player);
     let menu_windows: Vec<WindowType> = vec![
         WindowType::Main,
         WindowType::VictorySceen,
@@ -71,36 +66,33 @@ fn main() -> Result<()> {
 
     // Start the main loop.
     while !app.should_quit {
-        // Render the main user interface.
-        if app.window == WindowType::Main {
-            let _ = tui.draw_main_menu(&mut app);
-        } else if app.window == WindowType::VictorySceen {
-            if app.has_window_changed {
-                player.add_to_inventory(InventoryItem::InvFish(fishing_minigame.catch.clone()));
-                app.set_has_window_changed(false);
-            }
-            let _ = tui.draw_victory_screen(&mut app, &fishing_minigame, &player);
-        } else if app.window == WindowType::StandardMenu {
-            let _ = tui.draw_standard_menu(&mut app, &player);
-        }
-        while app.window == WindowType::Fishing {
-            if app.has_window_changed {
-                words = fishing_logic::get_random_words(&project_directory, &player);
-                catch = fishing_logic::get_random_fish(&project_directory, &app);
-                fishing_minigame = FishingMinigame::new(words, catch);
-                let _ = tui.draw_fishing_menu(&mut app, &mut fishing_minigame); // Here so it displays initally, without it the user needs to press a key.
-                app.set_has_window_changed(false);
-            }
-            match tui.events.next()? {
-                Event::Tick => {}
-                Event::Key(key_event) => {
-                    update_fishing_game(&mut fishing_minigame, key_event, &mut app);
-                    let _ = tui.draw_fishing_menu(&mut app, &mut fishing_minigame);
-                }
-                Event::Mouse(_) => {}
-                Event::Resize(_, _) => {}
-            }
-        }
+
+        let _ = match app.window {
+            WindowType::Main => tui.draw_main_menu(&mut app),
+            WindowType::VictorySceen => tui.draw_victory_screen(&mut app, &fishing_minigame, &mut player),
+            WindowType::Fishing => {
+                let _: () = while app.window == WindowType::Fishing {
+                    if app.has_window_changed {
+                        fishing_minigame = FishingMinigame::new(&project_directory, &app, &player);
+                        let _ = tui.draw_fishing_menu(&mut app, &mut fishing_minigame); // Here so it displays initally, without it the user needs to press a key.
+                        app.set_has_window_changed(false);
+                    }
+                    match tui.events.next()? {
+                        Event::Tick => {}
+                        Event::Key(key_event) => {
+                            update_fishing_game(&mut fishing_minigame, key_event, &mut app);
+                            let _ = tui.draw_fishing_menu(&mut app, &mut fishing_minigame);
+                        }
+                        Event::Mouse(_) => {}
+                        Event::Resize(_, _) => {}
+                    } 
+                };
+                Ok(())
+            },
+            WindowType::StandardMenu => tui.draw_standard_menu(&mut app, &player),
+            _ => unimplemented!()
+        };
+
         // Handle events.
         match tui.events.next()? {
             Event::Tick => {}
